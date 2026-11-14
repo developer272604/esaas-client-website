@@ -4,6 +4,7 @@ import Link from '@/components/common/Link';
 import { usePathname } from '@/lib/nav';
 import { useCatalog } from '@/lib/hooks';
 import { useCartStore, cartCount } from '@/store/cart';
+import { toPriced } from '@/lib/pricing';
 import { useWishlistStore } from '@/store/wishlist';
 import { useUiStore } from '@/store/ui';
 import { Icon } from '@/components/common/Icon';
@@ -27,11 +28,13 @@ export function Header() {
 }
 
 function DefaultHeader() {
-  const { template } = useCatalog();
+  const { template, product } = useCatalog();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const count = useCartStore((s) => cartCount(s.lines));
-  const wishCount = useWishlistStore((s) => s.ids.length);
+  // Lines can go stale (product removed/renamed since they were added); count only what the cart
+  // drawer would actually show, so the badge never says "3" over an empty cart.
+  const count = useCartStore((s) => cartCount(toPriced(s.lines, product).map((l) => ({ id: l.product.id, o: l.o, qty: l.qty }))));
+  const wishCount = useWishlistStore((s) => s.ids.filter((id) => product(id)).length);
   const openCart = useUiStore((s) => s.openCart);
   const cartOpen = useUiStore((s) => s.cartOpen);
 

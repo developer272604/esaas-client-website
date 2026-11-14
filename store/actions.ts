@@ -1,14 +1,18 @@
 'use client';
 
-import { getProduct, herbal } from '@/lib/catalog';
+import { herbal } from '@/lib/catalog';
 import { adapters } from '@/lib/adapters';
 import { computeTotals, toPriced, unitPrice } from '@/lib/pricing';
 import { FIELD_ORDER, validateCheckout, type CheckoutErrors } from '@/lib/validation';
 import { useAuthStore } from './auth';
 import { useCartStore } from './cart';
+import { useCatalogStore } from './catalog';
 import { useCheckoutStore } from './checkout';
 import { useOrdersStore } from './orders';
 import { useUiStore } from './ui';
+
+/** Resolves a product by id against whatever catalog this browser has live right now (see store/catalog.ts). */
+const getProduct = (id: string) => useCatalogStore.getState().products.find((p) => p.id === id);
 
 export function checkCheckout(): CheckoutErrors {
   return validateCheckout(useCheckoutStore.getState().form);

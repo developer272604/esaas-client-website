@@ -14,14 +14,19 @@ import { Crumbs, EmptyState, Price, QtyStepper, SectionHead, Stars } from '@/com
 import { ProductGrid } from '@/components/common/ProductCard';
 import { Gallery, OptionPicker, PincodeCheck, Tabs } from '@/components/product/parts';
 import { Txt, productDescId, productNameId, useProductName } from '@/components/demo/Txt';
+import type { Product } from '@/lib/types';
 
-export function ProductView({ id }: { id: string }) {
-  return <DefaultProductView id={id} />;
+export function ProductView({ id, products: liveProducts }: { id: string; products?: Product[] }) {
+  return <DefaultProductView id={id} liveProducts={liveProducts} />;
 }
 
-function DefaultProductView({ id }: { id: string }) {
-  const { product, products, category, freeShipAt } = useCatalog();
-  const p = product(id);
+function DefaultProductView({ id, liveProducts }: { id: string; liveProducts?: Product[] }) {
+  const { product, products: hookProducts, category, freeShipAt } = useCatalog();
+  // Server-rendered live products (from app/product/[id]/page.tsx) are
+  // authoritative for this request's first HTML; the reactive hook covers
+  // client-side navigations afterwards.
+  const products = liveProducts ?? hookProducts;
+  const p = liveProducts ? liveProducts.find((x) => x.id === id) : product(id);
   const pageName = useProductName(p?.id ?? '', p?.name ?? '');
   useDocumentTitle(p ? pageName : 'Product not found');
   if (!p) {

@@ -5,16 +5,26 @@ import { ListView } from '@/components/ListView';
 import { EmptyState } from '@/components/common/bits';
 import { useDocumentTitle } from '@/lib/useDocumentTitle';
 import { clampQuery, shortQuery } from '@/lib/search';
+import type { Category, Product } from '@/lib/types';
 
-export function ShopView() {
-  const { products } = useCatalog();
+export function ShopView({ products: liveProducts }: { products?: Product[] }) {
+  // `liveProducts` comes server-rendered from app/shop/page.tsx, so the
+  // first HTML already has the right products (for SEO/no-JS). Once
+  // hydrated, the reactive hook takes over (covers client navigations).
+  const { products: hookProducts } = useCatalog();
+  const products = liveProducts ?? hookProducts;
   useDocumentTitle('All products');
   return <ListView title="All products" blurb="Everything in the store." items={products} trail={[{ label: 'All products' }]} titleId="page.shop.title" blurbId="page.shop.blurb" activeSlug="all" />;
 }
 
-export function CategoryView({ slug }: { slug: string }) {
-  const { category, products } = useCatalog();
-  const c = category(slug);
+export function CategoryView({ slug, products: liveProducts, category: liveCategory }: { slug: string; products?: Product[]; category?: Category | null }) {
+  const { category, products: hookProducts } = useCatalog();
+  // Once a live catalog was fetched for this request, it's authoritative —
+  // including a definitive "not found" (liveCategory === null) — don't fall
+  // back to the demo catalogue's unrelated category of the same slug.
+  const hasLive = liveProducts !== undefined;
+  const products = hasLive ? liveProducts : hookProducts;
+  const c = hasLive ? liveCategory ?? undefined : category(slug);
   useDocumentTitle(c ? c.name : 'Category not found');
   if (!c) {
     return (

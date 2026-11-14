@@ -22,10 +22,12 @@ const fs = require('fs');
 const path = require('path');
 
 // This runs as a plain Node script (via `npm run prebuild`/`import-products`),
-// not through Next.js, so .env.local isn't loaded automatically. Load it
-// ourselves (without adding a dotenv dependency) so STORE_SLUG/API_URL set
-// there are picked up, same as the rest of the Next.js app.
-loadDotEnvLocal();
+// not through Next.js, so .env files aren't loaded automatically. Load them
+// ourselves (without adding a dotenv dependency). Each call only fills in
+// keys not already set, so load .env.local FIRST so it wins, matching
+// Next.js's own precedence (.env.local overrides .env).
+loadDotEnvFile('.env.local');
+loadDotEnvFile('.env');
 
 const API_URL = (process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8491').replace(/\/+$/, '');
 const STORE_SLUG = process.env.STORE_SLUG || process.env.NEXT_PUBLIC_STORE_SLUG || '';
@@ -115,8 +117,8 @@ async function importProducts() {
   }
 }
 
-function loadDotEnvLocal() {
-  const envPath = path.join(__dirname, '../.env.local');
+function loadDotEnvFile(filename) {
+  const envPath = path.join(__dirname, '..', filename);
   if (!fs.existsSync(envPath)) return;
 
   for (const line of fs.readFileSync(envPath, 'utf-8').split('\n')) {

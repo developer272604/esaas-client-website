@@ -1,0 +1,197 @@
+export const FONT_NAMES = [
+  'Inter',
+  'Poppins',
+  'Playfair Display',
+  'Lora',
+  'Space Grotesk',
+  'Manrope',
+  'Nunito',
+  'Fraunces',
+] as const;
+export type FontName = (typeof FONT_NAMES)[number];
+export type Radius = 'sharp' | 'soft' | 'round';
+export type Mode = 'light' | 'dark';
+
+export type ThemeState = { primary: string; font: FontName; mode: Mode; radius: Radius };
+
+export type ImageSrc = string;
+
+/** A drawn illustration (see components/common/Illustration.tsx) shown when a product has no photo. */
+export type ArtKind =
+  | 'phone'
+  | 'tablet'
+  | 'earbuds'
+  | 'neckband'
+  | 'watch'
+  | 'band'
+  | 'charger'
+  | 'powerbank'
+  | 'kurti'
+  | 'lehenga'
+  | 'suit'
+  | 'coord'
+  | 'trousers'
+  | 'potli'
+  | 'bottle'
+  | 'serum'
+  | 'jar'
+  | 'honey'
+  | 'tube'
+  | 'teabox'
+  | 'pouch'
+  | 'giftbox'
+  | 'sack'
+  | 'mat'
+  | 'plates'
+  | 'box'
+  | 'sachets'
+  | 'case';
+
+/** `mult` scales the price per option; `mrpMult` scales the MRP when it does not move in step with the price. */
+export type ProductOptions = { label: string; values: string[]; mult?: number[]; mrpMult?: number[] };
+
+export type Product = {
+  id: string; // globally unique, prefixed per template
+  cat: string;
+  name: string;
+  price: number;
+  mrp: number;
+  image?: ImageSrc;
+  /** What to draw when there is no photo. */
+  art?: ArtKind;
+  emoji: string;
+  rating: number;
+  rev: number;
+  desc: string;
+  tag?: string;
+  d?: string; // pipe-separated detail bullets
+  opts?: ProductOptions;
+  /** Gallery, first picture first. Without it the page shows `image`, or drawn views. */
+  images?: ImageSrc[];
+  /** One-line description for cards and the product page. */
+  short?: string;
+  ingredients?: string[];
+  usage?: string;
+  storage?: string;
+  weight?: string;
+};
+
+export type Category = { slug: string; name: string; emoji: string; blurb: string; image?: ImageSrc; art?: ArtKind };
+export type Review = { q: string; n: string; c: string };
+
+export type IconName = 'truck' | 'shield' | 'refresh' | 'chat' | 'leaf' | 'bolt' | 'star' | 'card' | 'headset' | 'box' | 'tag' | 'sparkle';
+export type UspItem = { icon: IconName; title: string; text: string };
+
+/* ---------- home sections ---------- */
+type Cta = { cta: string; go: string };
+
+export type Section =
+  | ({ type: 'heroImage'; eyebrow: string; title: string; text: string; image: ImageSrc; badges: string[] } & Cta)
+  | ({
+      type: 'heroShowcase';
+      eyebrow: string;
+      title: string;
+      text: string;
+      cta2: string;
+      go2: string;
+      features: UspItem[];
+      spotlight: { productId: string; label: string; tagline: string; cta: string };
+    } & Cta)
+  | ({ type: 'heroEditorial'; eyebrow: string; title: string; text: string; features: UspItem[]; art: ArtKind[]; script: string[] } & Cta)
+  | ({
+      type: 'heroDeals';
+      badge: string;
+      eyebrow: string;
+      title: string;
+      text: string;
+      cta2: string;
+      go2: string;
+      image: ImageSrc;
+      features: UspItem[];
+    } & Cta)
+  | { type: 'heroPhoto'; title: string; image: ImageSrc }
+  | { type: 'usp'; style: 'card' | 'strip'; items: UspItem[] }
+  | { type: 'cats'; style: 'photoCircles' | 'tiles' | 'circles' | 'quick' | 'cards'; title: string; link?: string }
+  | { type: 'featured'; title: string; sub?: string; count: number; cols: 2 | 4 | 6; link?: string; ids?: string[] }
+  | { type: 'rail'; cat: string; title: string }
+  | ({ type: 'feature'; eyebrow: string; title: string; checks: string[]; image: ImageSrc; sticker: string[] } & Cta)
+  | { type: 'promos'; cols: 2 | 3; items: ({ title: string; text: string; image?: ImageSrc; art?: ArtKind } & Cta)[] }
+  | ({ type: 'promoBenefits'; eyebrow: string; title: string; text: string; art: ArtKind; benefits: { title: string; text: string }[] } & Cta)
+  | { type: 'flash'; productId: string; title: string; label: string; image: ImageSrc; cta: string; endsInHours: number }
+  | { type: 'testimonial'; quote: string; name: string; role: string; image?: ImageSrc }
+  | { type: 'values'; items: string[] }
+  | ({ type: 'bannerImage'; image: ImageSrc } & Cta)
+  | { type: 'intro'; title: string; sub: string }
+  | ({ type: 'spotlight'; badge: string; code: string; name: string; text: string; image: ImageSrc; cta2: string; sideImage: ImageSrc } & Cta)
+  | { type: 'splitBand'; title: string; text: string; image: ImageSrc }
+  | ({ type: 'duoFeature'; badge: string; code: string; name: string; text: string; image: ImageSrc; image2: ImageSrc } & Cta)
+  | { type: 'news'; title: string; text: string }
+  | { type: 'ootyHero'; slides: (Cta & { image: ImageSrc; alt: string; eyebrow: string; title: string; accent: string; text: string; chips: string[] })[] }
+  | { type: 'ootyTrust'; items: UspItem[] }
+  | { type: 'ootyRings'; title: string; link: string; items: { label: string; go: string; image: ImageSrc }[] }
+  | ({ type: 'ootyBanner'; eyebrow: string; title: string; checks: string[]; image: ImageSrc; alt: string; sticker: string[] } & Cta)
+  | { type: 'ootyRail'; key: string; title: string; link: string; go: string; ids: string[] }
+  | { type: 'ootyPromos'; items: (Cta & { title: string; text: string; image: ImageSrc; alt: string })[] }
+  | ({ type: 'ootyPerks'; eyebrow: string; title: string; text: string; items: { icon: IconName; title: string; text: string }[] } & Cta)
+  | { type: 'ootyReviews'; eyebrow: string; title: string; note: string };
+
+export type SectionType = Section['type'];
+
+/** What every screen needs to know about a template before its catalogue has loaded. */
+export type TemplateMeta = Pick<Template, 'id' | 'name' | 'logo' | 'tag' | 'theme'>;
+
+export type IngredientInfo = { name: string; text: string; image: ImageSrc };
+
+export type Template = {
+  id: string;
+  /** Ingredient pictures and blurbs for the "Key ingredients" block of the Ooty product page. */
+  ingredientInfo?: IngredientInfo[];
+  name: string;
+  logo: string;
+  tag: string;
+  foot: string;
+  announce: string;
+  /** Order value from which standard delivery is free. The banners and the cart both read this. */
+  freeShipAt: number;
+  theme: { primary: string; font: FontName; bg: string; mode: Mode; radius: Radius };
+  cats: Category[];
+  products: Product[];
+  reviews: Review[];
+  home: Section[];
+};
+
+/* ---------- commerce ---------- */
+export type CartLine = { id: string; o: number; qty: number };
+export type Coupon = 'WELCOME10' | 'FREESHIP';
+export type ShipSpeed = 'std' | 'exp';
+export type PayMethod = 'upi' | 'card' | 'cod';
+
+export type Totals = {
+  sub: number;
+  mrp: number;
+  save: number;
+  disc: number;
+  ship: number;
+  cod: number;
+  total: number;
+};
+
+export type User = { name: string; phone: string };
+
+export type Address = { name: string; phone: string; addr: string; city: string; pin: string; state: string };
+
+export type OrderItem = { id: string; name: string; emoji: string; opt: string; qty: number; price: number };
+export type Order = {
+  id: string;
+  tpl: string;
+  date: number;
+  items: OrderItem[];
+  t: Totals;
+  addr: Address;
+  pay: PayMethod;
+  ship: ShipSpeed;
+  stage: number;
+  cancelled: boolean;
+};
+
+export type CheckoutForm = Address & { ship: ShipSpeed; pay: PayMethod; upi: string; card: string; exp: string; cvv: string };

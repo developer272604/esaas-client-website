@@ -141,7 +141,10 @@ export function adaptProductToOldFormat(p: Product): import('@/lib/types').Produ
       : undefined;
 
   return {
-    id: String(p.id),
+    // The SEO-friendly slug, not the numeric backend id — this is what
+    // shows up in the product URL (/product/<slug>), matching the "SEO
+    // URL" field on the admin's product editor.
+    id: p.slug,
     cat: p.category?.slug ?? 'other',
     name: p.name,
     price: basePrice,

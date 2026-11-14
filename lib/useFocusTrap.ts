@@ -6,7 +6,7 @@ const FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]):not([typ
  * Keeps Tab inside `ref` while `active`, calls `onEscape` on Escape, and gives focus
  * back to whatever had it before when the trap closes.
  */
-export function useFocusTrap(ref: RefObject<HTMLElement>, active: boolean, onEscape?: () => void, autoFocus = true) {
+export function useFocusTrap(ref: RefObject<HTMLElement | null>, active: boolean, onEscape?: () => void, autoFocus = true) {
   useEffect(() => {
     if (!active) return;
     const root = ref.current;

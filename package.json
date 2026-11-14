@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "import-products": "node scripts/import-products.js",
+    "prebuild": "npm run import-products"
   },
   "dependencies": {
     "lucide-react": "^1.64.0",

@@ -1,8 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { herbal } from '@/lib/catalog';
-import { useCatalogStore } from '@/store/catalog';
+import { herbal, products, categories, getProduct, getCategory, searchProducts } from '@/lib/catalog';
 import type { Category, Product, Template } from '@/lib/types';
 
 export type Catalog = {
@@ -15,29 +14,22 @@ export type Catalog = {
 };
 
 /**
- * The current store's catalogue: live admin-panel data once
- * <CatalogHydrator> has run (see app/layout.tsx), the built-in demo
- * catalogue until then or if no store is configured. Reactive — components
- * using this hook re-render when the live catalog is hydrated.
+ * The current store's catalogue, loaded at build time: live admin-panel
+ * data if STORE_SLUG was set when `npm run import-products` ran before
+ * this build (see scripts/import-products.js), otherwise the built-in
+ * demo catalogue. Static for the lifetime of this build — update it by
+ * rebuilding and redeploying.
  */
 export function useCatalog(): Catalog {
-  const products = useCatalogStore((s) => s.products);
-  const categories = useCatalogStore((s) => s.categories);
-
   return useMemo(
     () => ({
       template: { ...herbal, products, cats: categories },
       freeShipAt: herbal.freeShipAt,
       products,
-      category: (slug: string) => categories.find((c) => c.slug === slug),
-      product: (id: string) => products.find((p) => p.id === id),
-      search: (query: string) => {
-        const q = query.trim().toLowerCase();
-        if (!q) return [];
-        const catName = (slug: string) => categories.find((c) => c.slug === slug)?.name ?? '';
-        return products.filter((p) => `${p.name} ${p.desc} ${catName(p.cat)}`.toLowerCase().includes(q));
-      },
+      category: getCategory,
+      product: getProduct,
+      search: searchProducts,
     }),
-    [products, categories],
+    [],
   );
 }

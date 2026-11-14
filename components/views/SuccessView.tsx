@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from '@/components/common/Link';
 import { adapters } from '@/lib/adapters';
 import { useCatalog } from '@/lib/hooks';
@@ -10,7 +11,9 @@ import { EmptyState } from '@/components/common/bits';
 import { useText } from '@/components/demo/Txt';
 import { useDocumentTitle } from '@/lib/useDocumentTitle';
 
-export function SuccessView({ orderId }: { orderId: string }) {
+export function SuccessView() {
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get('orderId') ?? '';
   const { template } = useCatalog();
   const brand = useText('brand.name', template.name);
   const order = useOrdersStore((s) => s.orders.find((o) => o.id === orderId));

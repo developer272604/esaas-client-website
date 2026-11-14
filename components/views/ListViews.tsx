@@ -1,4 +1,5 @@
 "use client";
+import { useSearchParams } from 'next/navigation';
 import { useCatalog } from '@/lib/hooks';
 import { ListView } from '@/components/ListView';
 import { EmptyState } from '@/components/common/bits';
@@ -25,7 +26,9 @@ export function CategoryView({ slug }: { slug: string }) {
   return <ListView key={slug} title={c.name} blurb={c.blurb} items={products.filter((p) => p.cat === slug)} trail={[{ label: c.name }]} titleId={`cat.${slug}.name`} blurbId={`cat.${slug}.blurb`} activeSlug={slug} />;
 }
 
-export function SearchView({ q: rawQuery }: { q: string }) {
+export function SearchView() {
+  const searchParams = useSearchParams();
+  const rawQuery = searchParams.get('q') ?? '';
   const { search } = useCatalog();
   const q = clampQuery(rawQuery);
   useDocumentTitle(`Search: ${shortQuery(q)}`);

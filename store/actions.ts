@@ -59,7 +59,7 @@ export async function runPlaceOrder(navigate: (href: string) => void): Promise<v
     useOrdersStore.getState().add(order);
     useCartStore.getState().clear();
     useCheckoutStore.getState().set({ card: '', exp: '', cvv: '' });
-    navigate(`/success/${order.id}`);
+    navigate(`/success?orderId=${encodeURIComponent(order.id)}`);
   } catch {
     useUiStore.setState({ modal: null });
     useUiStore.getState().showToast('Something went wrong. You were not charged. Please try again.');

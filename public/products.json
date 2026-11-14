@@ -1,12 +1,1253 @@
 {
-  "products": [],
-  "categories": [],
+  "products": [
+    {
+      "id": 14,
+      "name": "Multiflora Honey",
+      "slug": "multiflora-honey",
+      "description": "A light, floral honey from bees that forage across coffee, wildflower and eucalyptus blossoms. Smooth enough for tea and toast.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 0,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 9,
+        "name": "Honey",
+        "slug": "honey"
+      },
+      "variants": [
+        {
+          "id": 20,
+          "sku": "H2-1",
+          "title": "250 g",
+          "price": 399,
+          "mrp": 499,
+          "stock": 25,
+          "position": 0
+        },
+        {
+          "id": 21,
+          "sku": "H2-2",
+          "title": "500 g",
+          "price": 718.2,
+          "mrp": 898.2,
+          "stock": 25,
+          "position": 1
+        },
+        {
+          "id": 22,
+          "sku": "H2-3",
+          "title": "1 kg",
+          "price": 1316.7,
+          "mrp": 1646.7,
+          "stock": 25,
+          "position": 2
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 15,
+      "name": "Eucalyptus Honey",
+      "slug": "eucalyptus-honey",
+      "description": "Dark amber honey with a clean, slightly minty finish. A favourite for winter mornings and sore throats.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 0,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 9,
+        "name": "Honey",
+        "slug": "honey"
+      },
+      "variants": [
+        {
+          "id": 23,
+          "sku": "H3-1",
+          "title": "250 g",
+          "price": 449,
+          "mrp": 599,
+          "stock": 25,
+          "position": 0
+        },
+        {
+          "id": 24,
+          "sku": "H3-2",
+          "title": "500 g",
+          "price": 808.2,
+          "mrp": 1078.2,
+          "stock": 25,
+          "position": 1
+        },
+        {
+          "id": 25,
+          "sku": "H3-3",
+          "title": "1 kg",
+          "price": 1481.7,
+          "mrp": 1976.7,
+          "stock": 25,
+          "position": 2
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 16,
+      "name": "Ashwagandha Powder",
+      "slug": "ashwagandha-powder",
+      "description": "Stone-ground ashwagandha root powder. Stir a teaspoon into warm milk at night.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 100,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 10,
+        "name": "Herbal products",
+        "slug": "herbal-products"
+      },
+      "variants": [
+        {
+          "id": 26,
+          "sku": "H4-1",
+          "title": "Default",
+          "price": 299,
+          "mrp": 399,
+          "stock": 25,
+          "position": 0
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 17,
+      "name": "Neem Leaf Powder",
+      "slug": "neem-leaf-powder",
+      "description": "Shade-dried neem leaves, finely milled. Use in face packs or as a weekly herbal rinse.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 100,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 10,
+        "name": "Herbal products",
+        "slug": "herbal-products"
+      },
+      "variants": [
+        {
+          "id": 27,
+          "sku": "H5-1",
+          "title": "Default",
+          "price": 249,
+          "mrp": 349,
+          "stock": 25,
+          "position": 0
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 18,
+      "name": "Tulsi Seeds",
+      "slug": "tulsi-seeds",
+      "description": "High-germination holy basil seeds with a sowing guide in the pack. Grows well on a sunny balcony.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 0,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 11,
+        "name": "Herbal seeds",
+        "slug": "herbal-seeds"
+      },
+      "variants": [
+        {
+          "id": 28,
+          "sku": "H6-1",
+          "title": "Default",
+          "price": 99,
+          "mrp": 149,
+          "stock": 25,
+          "position": 0
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 19,
+      "name": "Cold-pressed Coconut Oil",
+      "slug": "cold-pressed-coconut-oil",
+      "description": "Wooden-press coconut oil from single-origin farms. Use for cooking, skin and hair.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 0,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 12,
+        "name": "Oils and extracts",
+        "slug": "oils-and-extracts"
+      },
+      "variants": [
+        {
+          "id": 29,
+          "sku": "H7-1",
+          "title": "Default",
+          "price": 449,
+          "mrp": 549,
+          "stock": 25,
+          "position": 0
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 20,
+      "name": "Almond Hair Oil",
+      "slug": "almond-hair-oil",
+      "description": "Sweet almond and bhringraj oil for a calmer scalp and softer hair. Warm gently before use.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 0,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 12,
+        "name": "Oils and extracts",
+        "slug": "oils-and-extracts"
+      },
+      "variants": [
+        {
+          "id": 30,
+          "sku": "H8-1",
+          "title": "Default",
+          "price": 349,
+          "mrp": 429,
+          "stock": 25,
+          "position": 0
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 21,
+      "name": "Aloe Vera Gel",
+      "slug": "aloe-vera-gel",
+      "description": "Cold-extracted from the leaf and stabilised without alcohol. Works on skin, sunburn and as a light scalp tonic.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 150,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 13,
+        "name": "Personal care",
+        "slug": "personal-care"
+      },
+      "variants": [
+        {
+          "id": 31,
+          "sku": "H9-1",
+          "title": "Default",
+          "price": 329,
+          "mrp": 449,
+          "stock": 25,
+          "position": 0
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 22,
+      "name": "Tulsi Green Tea",
+      "slug": "tulsi-green-tea",
+      "description": "Whole-leaf green tea with holy basil and lemongrass. Twenty biodegradable pyramid bags.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 50,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 14,
+        "name": "Wellness",
+        "slug": "wellness"
+      },
+      "variants": [
+        {
+          "id": 32,
+          "sku": "H10-1",
+          "title": "Default",
+          "price": 249,
+          "mrp": 299,
+          "stock": 25,
+          "position": 0
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 23,
+      "name": "Wild Turmeric Powder",
+      "slug": "wild-turmeric-powder",
+      "description": "Stone-ground wild turmeric with a deep colour and a high curcumin content. Cook with it or stir into warm milk.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 0,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 15,
+        "name": "Spices and varkey",
+        "slug": "spices-and-varkey"
+      },
+      "variants": [
+        {
+          "id": 33,
+          "sku": "H11-1",
+          "title": "Default",
+          "price": 179,
+          "mrp": 229,
+          "stock": 25,
+          "position": 0
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 24,
+      "name": "Honey Gift Box",
+      "slug": "honey-gift-box",
+      "description": "Three honeys, a wooden dipper and a handwritten note in a reusable box. Ready to gift.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 0,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 16,
+        "name": "Gift packs",
+        "slug": "gift-packs"
+      },
+      "variants": [
+        {
+          "id": 34,
+          "sku": "H12-1",
+          "title": "Default",
+          "price": 999,
+          "mrp": 1299,
+          "stock": 25,
+          "position": 0
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 25,
+      "name": "Energy Honey",
+      "slug": "energy-honey",
+      "description": "Golden honey to stir into tea, drizzle over breakfast or enjoy by the spoon.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 250,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 9,
+        "name": "Honey",
+        "slug": "honey"
+      },
+      "variants": [
+        {
+          "id": 35,
+          "sku": "H13-1",
+          "title": "250 g",
+          "price": 399,
+          "mrp": 459,
+          "stock": 25,
+          "position": 0
+        },
+        {
+          "id": 36,
+          "sku": "H13-2",
+          "title": "500 g",
+          "price": 749,
+          "mrp": 869,
+          "stock": 25,
+          "position": 1
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 26,
+      "name": "Ooty Varkey",
+      "slug": "ooty-varkey",
+      "description": "The crisp, flaky, layered biscuit Ooty is known for, ideal with a hot cup of tea.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 200,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 15,
+        "name": "Spices and varkey",
+        "slug": "spices-and-varkey"
+      },
+      "variants": [
+        {
+          "id": 37,
+          "sku": "H14-1",
+          "title": "200 g",
+          "price": 149,
+          "mrp": 169,
+          "stock": 25,
+          "position": 0
+        },
+        {
+          "id": 38,
+          "sku": "H14-2",
+          "title": "400 g",
+          "price": 279,
+          "mrp": 329,
+          "stock": 25,
+          "position": 1
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 27,
+      "name": "Moringa Leaf Blend",
+      "slug": "moringa-leaf-blend",
+      "description": "A pure, finely milled moringa leaf blend for traditional kitchen and wellness routines.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 100,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 10,
+        "name": "Herbal products",
+        "slug": "herbal-products"
+      },
+      "variants": [
+        {
+          "id": 39,
+          "sku": "H15-1",
+          "title": "Default",
+          "price": 349,
+          "mrp": 399,
+          "stock": 25,
+          "position": 0
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 28,
+      "name": "Hibiscus Herbal Shampoo",
+      "slug": "hibiscus-herbal-shampoo",
+      "description": "A gentle herbal shampoo made for a nourishing wash-day ritual, inspired by the traditional use of hibiscus and amla.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 200,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 13,
+        "name": "Personal care",
+        "slug": "personal-care"
+      },
+      "variants": [
+        {
+          "id": 40,
+          "sku": "H16-1",
+          "title": "100 ml",
+          "price": 429,
+          "mrp": 499,
+          "stock": 25,
+          "position": 0
+        },
+        {
+          "id": 41,
+          "sku": "H16-2",
+          "title": "200 ml",
+          "price": 739.12,
+          "mrp": 832.78,
+          "stock": 25,
+          "position": 1
+        },
+        {
+          "id": 42,
+          "sku": "H16-3",
+          "title": "500 ml",
+          "price": 1548.88,
+          "mrp": 1834.12,
+          "stock": 25,
+          "position": 2
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 29,
+      "name": "Bhringraj Hair Mask",
+      "slug": "bhringraj-hair-mask",
+      "description": "A rich, creamy hair mask with bhringraj and herbal extracts for a weekly conditioning ritual.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 200,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 13,
+        "name": "Personal care",
+        "slug": "personal-care"
+      },
+      "variants": [
+        {
+          "id": 43,
+          "sku": "H17-1",
+          "title": "Default",
+          "price": 499,
+          "mrp": 599,
+          "stock": 25,
+          "position": 0
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 30,
+      "name": "Turmeric Sandalwood Cream",
+      "slug": "turmeric-sandalwood-cream",
+      "description": "A rich daily face cream inspired by the traditional pairing of turmeric and sandalwood.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 50,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 13,
+        "name": "Personal care",
+        "slug": "personal-care"
+      },
+      "variants": [
+        {
+          "id": 44,
+          "sku": "H18-1",
+          "title": "Default",
+          "price": 549,
+          "mrp": 649,
+          "stock": 25,
+          "position": 0
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 31,
+      "name": "Neem Tulsi Herbal Soap",
+      "slug": "neem-tulsi-herbal-soap",
+      "description": "A herbal bath bar with neem and tulsi for a fresh, everyday cleansing ritual.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 100,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 13,
+        "name": "Personal care",
+        "slug": "personal-care"
+      },
+      "variants": [
+        {
+          "id": 45,
+          "sku": "H19-1",
+          "title": "Single bar",
+          "price": 99,
+          "mrp": 119,
+          "stock": 25,
+          "position": 0
+        },
+        {
+          "id": 46,
+          "sku": "H19-2",
+          "title": "Pack of 3",
+          "price": 269,
+          "mrp": 357,
+          "stock": 25,
+          "position": 1
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 32,
+      "name": "Herbal Tooth Powder",
+      "slug": "herbal-tooth-powder",
+      "description": "A traditional-style tooth powder with a blend of herbs for a simple daily routine.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 100,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 13,
+        "name": "Personal care",
+        "slug": "personal-care"
+      },
+      "variants": [
+        {
+          "id": 47,
+          "sku": "H20-1",
+          "title": "Default",
+          "price": 199,
+          "mrp": 229,
+          "stock": 25,
+          "position": 0
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 33,
+      "name": "Coconut Herbal Hair Oil",
+      "slug": "coconut-herbal-hair-oil",
+      "description": "Coconut oil infused with bhringraj, amla and hibiscus for a traditional oiling ritual.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 200,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 12,
+        "name": "Oils and extracts",
+        "slug": "oils-and-extracts"
+      },
+      "variants": [
+        {
+          "id": 48,
+          "sku": "H21-1",
+          "title": "100 ml",
+          "price": 429,
+          "mrp": 499,
+          "stock": 25,
+          "position": 0
+        },
+        {
+          "id": 49,
+          "sku": "H21-2",
+          "title": "200 ml",
+          "price": 739.12,
+          "mrp": 832.78,
+          "stock": 25,
+          "position": 1
+        },
+        {
+          "id": 50,
+          "sku": "H21-3",
+          "title": "500 ml",
+          "price": 1635.02,
+          "mrp": 1917.56,
+          "stock": 25,
+          "position": 2
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 34,
+      "name": "Sesame Herbal Body Oil",
+      "slug": "sesame-herbal-body-oil",
+      "description": "A warm, nourishing body oil based on sesame, inspired by traditional self-care rituals.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 250,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 12,
+        "name": "Oils and extracts",
+        "slug": "oils-and-extracts"
+      },
+      "variants": [
+        {
+          "id": 51,
+          "sku": "H22-1",
+          "title": "100 ml",
+          "price": 549,
+          "mrp": 649,
+          "stock": 25,
+          "position": 0
+        },
+        {
+          "id": 52,
+          "sku": "H22-2",
+          "title": "250 ml",
+          "price": 1008.03,
+          "mrp": 1206.88,
+          "stock": 25,
+          "position": 1
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 35,
+      "name": "Rose Multani Face Pack",
+      "slug": "rose-multani-face-pack",
+      "description": "A classic face pack powder pairing multani mitti with rose petals.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 100,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 13,
+        "name": "Personal care",
+        "slug": "personal-care"
+      },
+      "variants": [
+        {
+          "id": 53,
+          "sku": "H23-1",
+          "title": "Default",
+          "price": 249,
+          "mrp": 299,
+          "stock": 25,
+          "position": 0
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 36,
+      "name": "Nilgiri Lemongrass Tea",
+      "slug": "nilgiri-lemongrass-tea",
+      "description": "A bright, citrusy herbal infusion of lemongrass, inspired by the Nilgiri hills.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 50,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 14,
+        "name": "Wellness",
+        "slug": "wellness"
+      },
+      "variants": [
+        {
+          "id": 54,
+          "sku": "H24-1",
+          "title": "50 g",
+          "price": 249,
+          "mrp": 299,
+          "stock": 25,
+          "position": 0
+        },
+        {
+          "id": 55,
+          "sku": "H24-2",
+          "title": "100 g",
+          "price": 449,
+          "mrp": 549,
+          "stock": 25,
+          "position": 1
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 37,
+      "name": "Herbal Bath Soak",
+      "slug": "herbal-bath-soak",
+      "description": "A relaxing bath soak combining mineral salts with dried herbs and flowers.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 250,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 14,
+        "name": "Wellness",
+        "slug": "wellness"
+      },
+      "variants": [
+        {
+          "id": 56,
+          "sku": "H25-1",
+          "title": "Default",
+          "price": 599,
+          "mrp": 699,
+          "stock": 25,
+          "position": 0
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 38,
+      "name": "Lavender Herbal Sachet Set",
+      "slug": "lavender-herbal-sachet-set",
+      "description": "A set of three sachets filled with dried lavender and herbs, for drawers, wardrobes or pillows.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 0,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 16,
+        "name": "Gift packs",
+        "slug": "gift-packs"
+      },
+      "variants": [
+        {
+          "id": 57,
+          "sku": "H26-1",
+          "title": "Default",
+          "price": 349,
+          "mrp": 399,
+          "stock": 25,
+          "position": 0
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:24+00:00",
+      "created_at": "2026-11-14T11:42:24+00:00"
+    },
+    {
+      "id": 13,
+      "name": "Wild Honey",
+      "slug": "wild-honey",
+      "description": "Raw wild honey collected by tribal harvesters from the high slopes of the Nilgiris. Unheated and unfiltered, so the pollen stays in the jar.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": null,
+      "tags": [],
+      "weight_grams": 0,
+      "is_cod_allowed": true,
+      "hsn_code": null,
+      "gst_rate": 5,
+      "category": {
+        "id": 9,
+        "name": "Honey",
+        "slug": "honey"
+      },
+      "variants": [
+        {
+          "id": 17,
+          "sku": "H1-1",
+          "title": "250 g",
+          "price": 499,
+          "mrp": 599,
+          "stock": 25,
+          "position": 0
+        },
+        {
+          "id": 18,
+          "sku": "H1-2",
+          "title": "500 g",
+          "price": 898.2,
+          "mrp": 1078.2,
+          "stock": 25,
+          "position": 1
+        },
+        {
+          "id": 19,
+          "sku": "H1-3",
+          "title": "1 kg",
+          "price": 1646.7,
+          "mrp": 1976.7,
+          "stock": 25,
+          "position": 2
+        }
+      ],
+      "images": [],
+      "updated_at": "2026-11-14T11:42:23+00:00",
+      "created_at": "2026-11-14T11:42:23+00:00"
+    },
+    {
+      "id": 6,
+      "name": "Indigo Block-print Stole",
+      "slug": "indigo-block-print-stole",
+      "description": "Cotton mulmul printed in Bagru with natural indigo.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": "Indigo Loom",
+      "tags": [
+        "house"
+      ],
+      "weight_grams": 180,
+      "is_cod_allowed": true,
+      "hsn_code": "621420",
+      "gst_rate": 5,
+      "category": {
+        "id": 5,
+        "name": "Stoles",
+        "slug": "stoles"
+      },
+      "variants": [
+        {
+          "id": 7,
+          "sku": "STOLE-IND",
+          "title": "One size",
+          "price": 2890,
+          "mrp": 2890,
+          "stock": 37,
+          "position": 0
+        }
+      ],
+      "images": [
+        {
+          "id": 17,
+          "url": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=60",
+          "alt": "Indigo Block-print Stole",
+          "is_primary": true,
+          "position": 0
+        }
+      ],
+      "updated_at": "2026-11-14T11:29:14+00:00",
+      "created_at": "2026-10-29T17:10:38+00:00"
+    },
+    {
+      "id": 7,
+      "name": "Handloom Cotton Kurta",
+      "slug": "handloom-cotton-kurta",
+      "description": "Straight cut, garment dyed, one chest pocket.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": "Indigo Loom",
+      "tags": [
+        "house"
+      ],
+      "weight_grams": 320,
+      "is_cod_allowed": true,
+      "hsn_code": "620419",
+      "gst_rate": 5,
+      "category": {
+        "id": 6,
+        "name": "Apparel",
+        "slug": "apparel"
+      },
+      "variants": [
+        {
+          "id": 8,
+          "sku": "KURTA-S",
+          "title": "S",
+          "price": 2490,
+          "mrp": 2490,
+          "stock": 13,
+          "position": 0
+        },
+        {
+          "id": 9,
+          "sku": "KURTA-M",
+          "title": "M",
+          "price": 2490,
+          "mrp": 2490,
+          "stock": 18,
+          "position": 1
+        },
+        {
+          "id": 10,
+          "sku": "KURTA-L",
+          "title": "L",
+          "price": 2490,
+          "mrp": 2490,
+          "stock": 11,
+          "position": 2
+        }
+      ],
+      "images": [
+        {
+          "id": 7,
+          "url": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=60",
+          "alt": "Handloom Cotton Kurta",
+          "is_primary": true,
+          "position": 0
+        }
+      ],
+      "updated_at": "2026-10-29T17:10:38+00:00",
+      "created_at": "2026-10-29T17:10:38+00:00"
+    },
+    {
+      "id": 8,
+      "name": "Kantha Throw",
+      "slug": "kantha-throw",
+      "description": "A quilted cotton throw stitched in Murshidabad.",
+      "seo_title": null,
+      "seo_description": null,
+      "brand": "Indigo Loom",
+      "tags": [
+        "house"
+      ],
+      "weight_grams": 900,
+      "is_cod_allowed": true,
+      "hsn_code": "630419",
+      "gst_rate": 5,
+      "category": {
+        "id": 7,
+        "name": "Home",
+        "slug": "home"
+      },
+      "variants": [
+        {
+          "id": 11,
+          "sku": "KANTHA-1",
+          "title": "Single",
+          "price": 4290,
+          "mrp": 4290,
+          "stock": 11,
+          "position": 0
+        }
+      ],
+      "images": [
+        {
+          "id": 8,
+          "url": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=60",
+          "alt": "Kantha Throw",
+          "is_primary": true,
+          "position": 0
+        }
+      ],
+      "updated_at": "2026-10-29T17:10:38+00:00",
+      "created_at": "2026-10-29T17:10:38+00:00"
+    }
+  ],
+  "categories": [
+    {
+      "id": 16,
+      "name": "Gift packs",
+      "slug": "gift-packs",
+      "description": "Hampers for festivals and family.",
+      "parent_id": null,
+      "position": 0,
+      "is_active": true
+    },
+    {
+      "id": 10,
+      "name": "Herbal products",
+      "slug": "herbal-products",
+      "description": "Stone-ground powders for daily wellness.",
+      "parent_id": null,
+      "position": 0,
+      "is_active": true
+    },
+    {
+      "id": 11,
+      "name": "Herbal seeds",
+      "slug": "herbal-seeds",
+      "description": "High-germination seeds to grow your own wellness.",
+      "parent_id": null,
+      "position": 0,
+      "is_active": true
+    },
+    {
+      "id": 9,
+      "name": "Honey",
+      "slug": "honey",
+      "description": "Raw honey from Nilgiri farms and forests.",
+      "parent_id": null,
+      "position": 0,
+      "is_active": true
+    },
+    {
+      "id": 12,
+      "name": "Oils and extracts",
+      "slug": "oils-and-extracts",
+      "description": "Cold-pressed, unrefined and single origin.",
+      "parent_id": null,
+      "position": 0,
+      "is_active": true
+    },
+    {
+      "id": 13,
+      "name": "Personal care",
+      "slug": "personal-care",
+      "description": "Soaps, creams and hair care made from garden botanicals.",
+      "parent_id": null,
+      "position": 0,
+      "is_active": true
+    },
+    {
+      "id": 15,
+      "name": "Spices and varkey",
+      "slug": "spices-and-varkey",
+      "description": "Single-origin spices and crisp Ooty varkey.",
+      "parent_id": null,
+      "position": 0,
+      "is_active": true
+    },
+    {
+      "id": 5,
+      "name": "Stoles",
+      "slug": "stoles",
+      "description": null,
+      "parent_id": null,
+      "position": 0,
+      "is_active": true
+    },
+    {
+      "id": 14,
+      "name": "Wellness",
+      "slug": "wellness",
+      "description": "Teas, soaks and daily rituals.",
+      "parent_id": null,
+      "position": 0,
+      "is_active": true
+    },
+    {
+      "id": 6,
+      "name": "Apparel",
+      "slug": "apparel",
+      "description": null,
+      "parent_id": null,
+      "position": 1,
+      "is_active": true
+    },
+    {
+      "id": 7,
+      "name": "Home",
+      "slug": "home",
+      "description": null,
+      "parent_id": null,
+      "position": 2,
+      "is_active": true
+    }
+  ],
   "meta": {
-    "exported_at": null,
-    "store_id": null,
-    "store_name": null,
-    "store_slug": null,
-    "product_count": 0,
-    "category_count": 0
+    "exported_at": "2026-11-14T11:45:46+00:00",
+    "store_id": 2,
+    "store_name": "Indigo Loom",
+    "store_slug": "indigo-loom",
+    "product_count": 29,
+    "category_count": 11
   }
 }

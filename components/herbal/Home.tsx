@@ -285,6 +285,28 @@ export function OtRail({ s, i }: SP<'ootyRail'>) {
   );
 }
 
+/**
+ * Products from whichever category comes first in this store's own
+ * catalogue — unlike OtRail above, this never depends on hardcoded demo
+ * product ids, so it always has something to show for a real store.
+ */
+export function OtFirstCategoryRail() {
+  const { template, products } = useCatalog();
+  const category = template.cats[0];
+  if (!category) return null;
+  const items = products.filter((p) => p.cat === category.slug).slice(0, 10);
+  if (!items.length) return null;
+  return (
+    <Reveal className="ot-rail">
+      <OtCarousel id="first-category" title={category.name} link="View all" go={`category/${category.slug}`}>
+        {items.map((p) => (
+          <OtCard key={p.id} product={p} />
+        ))}
+      </OtCarousel>
+    </Reveal>
+  );
+}
+
 /* ---------- promo tiles ---------- */
 
 export function OtPromos({ s, i }: SP<'ootyPromos'>) {

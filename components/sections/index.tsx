@@ -1,6 +1,6 @@
 'use client';
 
-import { OtBanner, OtHero, OtPerks, OtPromos, OtRail, OtReviews, OtRings, OtTrust } from '@/components/herbal/Home';
+import { OtBanner, OtFirstCategoryRail, OtHero, OtPerks, OtPromos, OtRail, OtReviews, OtRings, OtTrust } from '@/components/herbal/Home';
 import { herbal } from '@/lib/catalog';
 
 /** The honey home page, in the order stored with the catalogue. */
@@ -15,7 +15,14 @@ export function HomeSections() {
           case 'ootyTrust':
             return <OtTrust key={key} s={section} i={i} />;
           case 'ootyRings':
-            return <OtRings key={key} s={section} i={i} />;
+            return (
+              <>
+                <OtRings key={key} s={section} i={i} />
+                {/* This store's own first category — works for any real
+                    store, unlike the hardcoded-id rails below. */}
+                <OtFirstCategoryRail key={`${key}-first-category`} />
+              </>
+            );
           case 'ootyBanner':
             return <OtBanner key={key} s={section} i={i} />;
           case 'ootyRail':

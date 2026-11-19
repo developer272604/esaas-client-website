@@ -37,6 +37,8 @@ function DefaultHeader() {
   const wishCount = useWishlistStore((s) => s.ids.filter((id) => product(id)).length);
   const openCart = useUiStore((s) => s.openCart);
   const cartOpen = useUiStore((s) => s.cartOpen);
+  const openWishlist = useUiStore((s) => s.openWishlist);
+  const wishlistOpen = useUiStore((s) => s.wishlistOpen);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -71,10 +73,10 @@ function DefaultHeader() {
         <SearchBox />
         <div className="acts">
           <AccountMenu />
-          <Link className="icon" href="/wishlist" aria-label={`Wishlist, ${wishCount} item${wishCount === 1 ? '' : 's'}`}>
+          <button type="button" className="icon" aria-label={`Wishlist, ${wishCount} item${wishCount === 1 ? '' : 's'}`} aria-haspopup="dialog" aria-expanded={wishlistOpen} onClick={openWishlist}>
             <Icon name="heart" />
             {wishCount > 0 && <span className="badge">{wishCount}</span>}
-          </Link>
+          </button>
           <button type="button" className="icon" aria-label={`Cart, ${count} item${count === 1 ? '' : 's'}`} aria-haspopup="dialog" aria-expanded={cartOpen} onClick={openCart}>
             <Icon name="bag" />
             {count > 0 && <span className="badge">{count}</span>}

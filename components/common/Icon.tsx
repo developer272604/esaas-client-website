@@ -109,6 +109,12 @@ const PATHS = {
       <path d="M3 7l9 6 9-6" />
     </>
   ),
+  trash: (
+    <>
+      <path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" />
+      <path d="M10 11v6M14 11v6" />
+    </>
+  ),
 } as const;
 
 export type IconKey = keyof typeof PATHS;

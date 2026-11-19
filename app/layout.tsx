@@ -12,6 +12,7 @@ import '@/styles/sections.css';
 import '@/styles/pages.css';
 import '@/styles/category.css';
 import '@/styles/cart.css';
+import '@/styles/wishlist-drawer.css';
 import '@/styles/herbal.css';
 import '@/styles/mobile.css';
 

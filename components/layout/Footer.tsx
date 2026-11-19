@@ -9,6 +9,7 @@ export function Footer() {
   const { template } = useCatalog();
   const brand = useText('brand.name', template.name);
   const openCart = useUiStore((s) => s.openCart);
+  const openWishlist = useUiStore((s) => s.openWishlist);
   return (
     <footer className="foot">
       <div className="wrap">
@@ -35,7 +36,7 @@ export function Footer() {
             <ul>
               <li><Link href="/orders">Track an order</Link></li>
               <li><button type="button" className="linkbtn" onClick={openCart}>Your cart</button></li>
-              <li><Link href="/wishlist">Wishlist</Link></li>
+              <li><button type="button" className="linkbtn" onClick={openWishlist}>Wishlist</button></li>
               <li>7-day easy returns</li>
             </ul>
           </div>
@@ -49,7 +50,7 @@ export function Footer() {
         </div>
         <div className="fb">
           <span>© {new Date().getFullYear()} {brand}. Demo store, no real orders.</span>
-          <span>Built on Devduo ESaas</span>
+          <span className="fb-built"><img className="foot-heart" src="/images/brand/footer-heart.png" alt="" width="16" height="16" />Built on Devduo ESaas</span>
           <div className="chips2">
             <span>UPI</span>
             <span>Cards</span>

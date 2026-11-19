@@ -63,6 +63,13 @@ img {
   outline: 2px solid var(--primary-text);
   outline-offset: 2px;
 }
+/* Form fields show focus as a border-colour change, not an outside ring. */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  border-color: var(--primary-text);
+}
 .muted {
   color: var(--muted);
 }
@@ -124,6 +131,11 @@ img {
   color: var(--primary-text);
   border-color: var(--surface);
 }
+.btn.accent {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent);
+}
 .btn.sm {
   padding: 8px 14px;
   font-size: 14px;
@@ -150,6 +162,10 @@ button[disabled] {
 }
 .icon:hover {
   background: var(--soft);
+}
+.icon.sm {
+  width: 32px;
+  height: 32px;
 }
 
 @media (prefers-reduced-motion: reduce) {

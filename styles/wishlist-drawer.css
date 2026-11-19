@@ -1,0 +1,35 @@
+/* The wishlist drawer. Shares cart.css's cd-* classes for the head/body/line/empty layout; this file is only the panel shell and wishlist-only bits. Colours come from the theme variables only. */
+#wishlist-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(440px, 100%);
+  background: var(--bg);
+  color: var(--text);
+  z-index: 96;
+  transform: translateX(102%);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.3s;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border);
+  visibility: hidden;
+  outline: none;
+}
+#wishlist-drawer.on {
+  transform: none;
+  visibility: visible;
+  transition-delay: 0s;
+  box-shadow: var(--shadow-drawer);
+}
+.wd-empty-art {
+  color: var(--heart);
+}
+#wishlist-drawer .cd-act {
+  justify-content: flex-start;
+}
+@media (prefers-reduced-motion: reduce) {
+  #wishlist-drawer {
+    transition: none;
+  }
+}

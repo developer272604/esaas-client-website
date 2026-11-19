@@ -545,6 +545,9 @@ html.capturing .ot-rv {
 .ot-card-body .ot-price + .ot-add {
   margin-top: 12px;
 }
+.card-qty-stepper.ot-add {
+  padding: 0 6px;
+}
 .ot-track {
   display: flex;
   gap: 10px;

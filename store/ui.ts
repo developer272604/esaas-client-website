@@ -14,6 +14,8 @@ type UiStore = {
   settingsOpen: boolean;
   /** The side cart. The cart is a drawer over any page, not a page of its own. */
   cartOpen: boolean;
+  /** The wishlist, also a drawer over any page rather than a page of its own. */
+  wishlistOpen: boolean;
   modal: ModalState;
   toast: ToastState;
   /** Runs once after a successful sign-in (used to resume placing an order). */
@@ -21,6 +23,8 @@ type UiStore = {
   setSettingsOpen: (open: boolean) => void;
   openCart: () => void;
   closeCart: () => void;
+  openWishlist: () => void;
+  closeWishlist: () => void;
   openModal: (m: Exclude<ModalState, null>) => void;
   closeModal: () => void;
   showToast: (message: string, action?: { label: string; href: string }) => void;
@@ -33,12 +37,15 @@ let toastId = 0;
 export const useUiStore = create<UiStore>()((set) => ({
   settingsOpen: false,
   cartOpen: false,
+  wishlistOpen: false,
   modal: null,
   toast: null,
   afterAuth: null,
-  setSettingsOpen: (settingsOpen) => set(settingsOpen ? { settingsOpen, cartOpen: false } : { settingsOpen }),
-  openCart: () => set({ cartOpen: true, settingsOpen: false }),
+  setSettingsOpen: (settingsOpen) => set(settingsOpen ? { settingsOpen, cartOpen: false, wishlistOpen: false } : { settingsOpen }),
+  openCart: () => set({ cartOpen: true, settingsOpen: false, wishlistOpen: false }),
   closeCart: () => set({ cartOpen: false }),
+  openWishlist: () => set({ wishlistOpen: true, settingsOpen: false, cartOpen: false }),
+  closeWishlist: () => set({ wishlistOpen: false }),
   openModal: (modal) => set({ modal }),
   closeModal: () => set({ modal: null, afterAuth: null }),
   showToast: (message, action) => set({ toast: { id: ++toastId, message, action } }),

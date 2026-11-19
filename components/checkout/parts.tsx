@@ -1,9 +1,12 @@
 "use client";
 import type { ReactNode } from 'react';
 import { inr } from '@/lib/format';
-import type { CheckoutForm, ShipSpeed, PayMethod, Totals } from '@/lib/types';
+import type { ArtKind, CheckoutForm, ImageSrc, ShipSpeed, PayMethod, Totals } from '@/lib/types';
 import type { CheckoutErrors } from '@/lib/validation';
 import { COD_FEE, EXPRESS_SHIP, STD_SHIP } from '@/lib/pricing';
+import { Art } from '@/components/common/Art';
+import { Icon } from '@/components/common/Icon';
+import Img from '@/components/common/Img';
 
 type Patch = (p: Partial<CheckoutForm>) => void;
 
@@ -12,7 +15,7 @@ function Field({ id, label, value, error, onChange, wide, maxLength, inputMode, 
   maxLength?: number; inputMode?: 'numeric' | 'text'; autoComplete?: string; placeholder?: string;
 }) {
   return (
-    <div className={wide ? 'w' : ''}>
+    <div className={`ckf${wide ? ' w' : ''}${error ? ' bad' : ''}`}>
       <label htmlFor={`ck-${id}`}>{label}</label>
       <input
         id={`ck-${id}`}
@@ -22,7 +25,6 @@ function Field({ id, label, value, error, onChange, wide, maxLength, inputMode, 
         inputMode={inputMode}
         autoComplete={autoComplete ?? 'off'}
         placeholder={placeholder}
-        className={error ? 'bad' : ''}
         aria-invalid={!!error}
         aria-describedby={error ? `ck-${id}-err` : undefined}
         onChange={(e) => onChange(e.target.value)}
@@ -54,13 +56,14 @@ export function AddressForm({ form, errors, set }: { form: CheckoutForm; errors:
   );
 }
 
-function Opt<T extends string>({ group, value, current, title, hint, onPick }: { group: string; value: T; current: T; title: string; hint: string; onPick: (v: T) => void }) {
+function Opt<T extends string>({ group, value, current, title, hint, icons, onPick }: { group: string; value: T; current: T; title: string; hint: string; icons?: string; onPick: (v: T) => void }) {
   return (
     <label className={`opt${current === value ? ' on' : ''}`}>
       <input type="radio" name={group} value={value} checked={current === value} onChange={() => onPick(value)} />
       <span>
         {title}
         <small>{hint}</small>
+        {icons && <Img src={icons} alt="" className="opt-icons" width={140} height={32} />}
       </span>
     </label>
   );
@@ -81,7 +84,7 @@ export function PaymentOptions({ form, errors, set }: { form: CheckoutForm; erro
   return (
     <div className="box">
       <h2>Payment</h2>
-      <Opt group="pay" value="upi" current={form.pay} title="UPI with Devduo Pay" hint="Pay with any UPI app" onPick={pick} />
+      <Opt group="pay" value="upi" current={form.pay} title="UPI with Devduo Pay" hint="Pay with any UPI app" icons="/images/checkout/payment-methods.png" onPick={pick} />
       {form.pay === 'upi' && (
         <div className="f sub">
           <Field id="upi" label="UPI ID (for example name@upi)" value={form.upi} error={errors.upi} wide onChange={(v) => set({ upi: v.trim() })} />
@@ -112,18 +115,50 @@ export function PaymentOptions({ form, errors, set }: { form: CheckoutForm; erro
   );
 }
 
-/** Totals block used by both the cart and the checkout. */
-export function OrderSummary({ totals, children, footer, lines, heading = 'Order summary' }: { totals: Totals; children?: ReactNode; footer?: ReactNode; lines?: { label: string; amount: number; qty?: number }[]; heading?: string }) {
+type SummaryLine = { id: string; name: string; amount: number; qty: number; variant?: string; image?: ImageSrc; art?: ArtKind; emoji?: string };
+
+function TrustBadges() {
+  return (
+    <div className="sum-badges">
+      <div>
+        <Icon name="shield" size={22} />
+        <span>Secure Checkout</span>
+      </div>
+      <div>
+        <Icon name="truck" size={22} />
+        <span>Free Shipping</span>
+      </div>
+      <div>
+        <Icon name="refresh" size={22} />
+        <span>Easy Returns</span>
+      </div>
+    </div>
+  );
+}
+
+/** Totals block used by the checkout. */
+export function OrderSummary({ totals, children, footer, lines, heading = 'Order summary' }: { totals: Totals; children?: ReactNode; footer?: ReactNode; lines?: SummaryLine[]; heading?: string }) {
   return (
     <aside className="sum">
       <h2>{heading}</h2>
       {children}
-      {lines?.map((l) => (
-        <div className="r" key={l.label}>
-          <span>{l.label}</span>
-          <span>{inr(l.amount)}</span>
+      {lines && lines.length > 0 && (
+        <div className="sum-items">
+          {lines.map((l) => (
+            <div className="sum-item" key={l.id}>
+              <div className="sum-thumb">
+                <Art id={l.id} name={l.name} image={l.image} kind={l.art} emoji={l.emoji} sizes="80px" />
+              </div>
+              <div className="sum-item-info">
+                <b>{l.name}</b>
+                {l.variant && <small>{l.variant}</small>}
+                {l.qty > 1 && <small>Qty: {l.qty}</small>}
+                <span>{inr(l.amount)}</span>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
       <div className="r">
         <span>Subtotal</span>
         <span>{inr(totals.sub)}</span>
@@ -155,6 +190,7 @@ export function OrderSummary({ totals, children, footer, lines, heading = 'Order
         <span>{inr(totals.total)}</span>
       </div>
       {footer}
+      <TrustBadges />
     </aside>
   );
 }

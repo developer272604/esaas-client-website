@@ -46,11 +46,13 @@ type Props = {
   blurbId?: string;
   /** Category slug to mark in the sidebar, or `all` on the shop page. Nothing marked when left out (search). */
   activeSlug?: string;
+  activeSubcat?: string;
+  onClearSubcat?: () => void;
   /** Small label above the heading. Defaults to the store's tagline. */
   eyebrow?: string;
 };
 
-export function ListView({ title, blurb, items, trail, emptyText, titleId, blurbId, activeSlug, eyebrow }: Props) {
+export function ListView({ title, blurb, items, trail, emptyText, titleId, blurbId, activeSlug, activeSubcat, onClearSubcat, eyebrow }: Props) {
   const { template, products, freeShipAt } = useCatalog();
   const narrow = useNarrow();
   const categoryImage = activeSlug && activeSlug !== 'all' ? template.cats.find((c) => c.slug === activeSlug)?.image : undefined;
@@ -86,7 +88,20 @@ export function ListView({ title, blurb, items, trail, emptyText, titleId, blurb
     [items, freeShipAt, offers],
   );
   const top = useMemo(() => [...items].sort((a, b) => b.rating - a.rating || b.rev - a.rev).slice(0, 3), [items]);
-  const cats = useMemo(() => template.cats.map((c) => ({ slug: c.slug, name: c.name, count: products.filter((p) => p.cat === c.slug).length })), [template, products]);
+  const cats = useMemo(
+    () =>
+      template.cats.map((c) => ({
+        slug: c.slug,
+        name: c.name,
+        count: products.filter((p) => p.cat === c.slug).length,
+        subcategories: c.subcategories?.map((sub) => ({
+          slug: sub.slug,
+          name: sub.name,
+          count: products.filter((p) => p.cat === c.slug && p.subcat === sub.slug).length,
+        })),
+      })),
+    [template, products],
+  );
 
   // Any change to what is listed goes back to the first page.
   const change = <T,>(set: Dispatch<SetStateAction<T>>) => (v: T) => {
@@ -145,6 +160,8 @@ export function ListView({ title, blurb, items, trail, emptyText, titleId, blurb
               cats={cats}
               allCount={products.length}
               activeSlug={activeSlug}
+              activeSubcat={activeSubcat}
+              onClearSubcat={onClearSubcat}
               filters={filters}
               bounds={bounds}
               showPrice={items.length > 1 && bounds.hi > bounds.lo}

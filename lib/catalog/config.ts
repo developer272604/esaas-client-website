@@ -38,14 +38,66 @@ export const herbal: Template = {
   freeShipAt: FREE_SHIP_AT,
   announce: `Free shipping on orders above ${inr(FREE_SHIP_AT)}. Use WELCOME10 for 10% off your first order.`,
   cats: [
-    { slug: 'honey', name: 'Honey', emoji: '🍯', blurb: 'Raw honey from Nilgiri farms and forests.', image: catHoney },
-    { slug: 'herbal', name: 'Herbal products', emoji: '🌿', blurb: 'Stone-ground powders for daily wellness.', image: catHerbal },
-    { slug: 'seeds', name: 'Herbal seeds', emoji: '🌱', blurb: 'High-germination seeds to grow your own wellness.', image: catSeeds },
-    { slug: 'oils', name: 'Oils and extracts', emoji: '🥥', blurb: 'Cold-pressed, unrefined and single origin.', image: catOils },
-    { slug: 'care', name: 'Personal care', emoji: '🧴', blurb: 'Soaps, creams and hair care made from garden botanicals.', image: catCare },
-    { slug: 'wellness', name: 'Wellness', emoji: '🍵', blurb: 'Teas, soaks and daily rituals.', image: catWellness },
-    { slug: 'spices', name: 'Spices and varkey', emoji: '🌼', blurb: 'Single-origin spices and crisp Ooty varkey.', image: catVarkey },
-    { slug: 'gifts', name: 'Gift packs', emoji: '🎁', blurb: 'Hampers for festivals and family.', image: catGift },
+    {
+      slug: 'honey', name: 'Honey', emoji: '🍯', blurb: 'Raw honey from Nilgiri farms and forests.', image: catHoney,
+      subcategories: [
+        { slug: 'raw', name: 'Raw honey' },
+        { slug: 'multiflora', name: 'Multiflora & floral' },
+        { slug: 'infused', name: 'Herbal infusions' },
+      ],
+    },
+    {
+      slug: 'herbal', name: 'Herbal products', emoji: '🌿', blurb: 'Stone-ground powders for daily wellness.', image: catHerbal,
+      subcategories: [
+        { slug: 'powders', name: 'Root & herbal powders' },
+        { slug: 'leaf', name: 'Leaf extracts' },
+      ],
+    },
+    {
+      slug: 'seeds', name: 'Herbal seeds', emoji: '🌱', blurb: 'High-germination seeds to grow your own wellness.', image: catSeeds,
+      subcategories: [
+        { slug: 'culinary', name: 'Culinary herbs' },
+        { slug: 'medicinal', name: 'Medicinal plants' },
+      ],
+    },
+    {
+      slug: 'oils', name: 'Oils and extracts', emoji: '🥥', blurb: 'Cold-pressed, unrefined and single origin.', image: catOils,
+      subcategories: [
+        { slug: 'hair-oils', name: 'Hair oils' },
+        { slug: 'cold-pressed', name: 'Cold-pressed oils' },
+        { slug: 'body-oils', name: 'Body & massage oils' },
+      ],
+    },
+    {
+      slug: 'care', name: 'Personal care', emoji: '🧴', blurb: 'Soaps, creams and hair care made from garden botanicals.', image: catCare,
+      subcategories: [
+        { slug: 'hair-care', name: 'Hair care' },
+        { slug: 'skin-care', name: 'Skin & face care' },
+        { slug: 'soaps', name: 'Herbal soaps' },
+      ],
+    },
+    {
+      slug: 'wellness', name: 'Wellness', emoji: '🍵', blurb: 'Teas, soaks and daily rituals.', image: catWellness,
+      subcategories: [
+        { slug: 'teas', name: 'Herbal teas' },
+        { slug: 'soaks', name: 'Bath & body soaks' },
+        { slug: 'daily-wellness', name: 'Daily rituals' },
+      ],
+    },
+    {
+      slug: 'spices', name: 'Spices and varkey', emoji: '🌼', blurb: 'Single-origin spices and crisp Ooty varkey.', image: catVarkey,
+      subcategories: [
+        { slug: 'spices', name: 'Hill spices' },
+        { slug: 'bakery', name: 'Ooty bakery' },
+      ],
+    },
+    {
+      slug: 'gifts', name: 'Gift packs', emoji: '🎁', blurb: 'Hampers for festivals and family.', image: catGift,
+      subcategories: [
+        { slug: 'hampers', name: 'Festive hampers' },
+        { slug: 'boxes', name: 'Gift boxes' },
+      ],
+    },
   ],
   products,
   ingredientInfo: [

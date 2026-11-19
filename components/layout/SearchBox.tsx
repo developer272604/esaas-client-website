@@ -11,7 +11,7 @@ import { MAX_QUERY, clampQuery } from '@/lib/search';
 
 /** `pill`: the Ooty look, with a round submit button on the right. */
 export function SearchBox({ pill }: { pill?: boolean }) {
-  const { search } = useCatalog();
+  const { search, template } = useCatalog();
   const router = useRouter();
   const nameOf = useNameOf();
   const [q, setQ] = useState('');
@@ -20,6 +20,12 @@ export function SearchBox({ pill }: { pill?: boolean }) {
   const listId = useId();
   const results = useMemo(() => search(q).slice(0, 5), [q, search]);
   const term = q.trim();
+
+  const matchingCats = useMemo(() => {
+    if (!term) return [];
+    const lower = term.toLowerCase();
+    return template.cats.filter((c) => c.name.toLowerCase().includes(lower) || c.slug.toLowerCase().includes(lower)).slice(0, 2);
+  }, [term, template.cats]);
 
   useEffect(() => {
     const onDown = (e: MouseEvent) => {
@@ -32,6 +38,17 @@ export function SearchBox({ pill }: { pill?: boolean }) {
   const go = () => {
     if (!term) return;
     setOpen(false);
+    const lower = term.toLowerCase();
+    const directCat = template.cats.find((c) => c.name.toLowerCase().includes(lower) || c.slug.toLowerCase().includes(lower));
+    if (directCat) {
+      router.push(`/category/${directCat.slug}`);
+      return;
+    }
+    const matched = search(term);
+    if (matched.length > 0 && matched[0].cat) {
+      router.push(`/category/${matched[0].cat}`);
+      return;
+    }
     router.push(`/search?q=${encodeURIComponent(term)}`);
   };
 
@@ -65,6 +82,12 @@ export function SearchBox({ pill }: { pill?: boolean }) {
         </button>
       )}
       <div id={listId} className={`sugg${open && term ? ' on' : ''}`}>
+        {matchingCats.map((c) => (
+          <Link key={c.slug} href={`/category/${c.slug}`} onClick={() => setOpen(false)} className="sugg-cat">
+            <span className="sugg-badge">Category</span>
+            <span><b>{c.name}</b> — explore category</span>
+          </Link>
+        ))}
         {results.length > 0 ? (
           results.map((p) => (
             <Link key={p.id} href={`/product/${p.id}`} onClick={() => setOpen(false)}>

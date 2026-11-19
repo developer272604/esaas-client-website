@@ -13,6 +13,7 @@ export function AccountMenu({ variant = 'icon' }: { variant?: 'icon' | 'ooty' })
   const user = useAuthStore((s) => s.user);
   const signOut = useAuthStore((s) => s.signOut);
   const openModal = useUiStore((s) => s.openModal);
+  const openWishlist = useUiStore((s) => s.openWishlist);
   const toast = useUiStore((s) => s.showToast);
 
   useEffect(() => {
@@ -61,7 +62,15 @@ export function AccountMenu({ variant = 'icon' }: { variant?: 'icon' | 'ooty' })
                 <br />+91 {user.phone}
               </div>
               <Link href="/orders">My orders</Link>
-              <Link href="/wishlist">Wishlist</Link>
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  openWishlist();
+                }}
+              >
+                Wishlist
+              </button>
               <button
                 type="button"
                 onClick={() => {

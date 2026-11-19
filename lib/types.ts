@@ -53,6 +53,7 @@ export type ProductOptions = { label: string; values: string[]; mult?: number[];
 export type Product = {
   id: string; // globally unique, prefixed per template
   cat: string;
+  subcat?: string;
   name: string;
   price: number;
   mrp: number;
@@ -76,7 +77,8 @@ export type Product = {
   weight?: string;
 };
 
-export type Category = { slug: string; name: string; emoji: string; blurb: string; image?: ImageSrc; art?: ArtKind };
+export type Subcategory = { slug: string; name: string };
+export type Category = { slug: string; name: string; emoji: string; blurb: string; image?: ImageSrc; art?: ArtKind; subcategories?: Subcategory[] };
 export type Review = { q: string; n: string; c: string };
 
 export type IconName = 'truck' | 'shield' | 'refresh' | 'chat' | 'leaf' | 'bolt' | 'star' | 'card' | 'headset' | 'box' | 'tag' | 'sparkle';

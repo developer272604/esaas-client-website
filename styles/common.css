@@ -137,6 +137,49 @@
 .card .btn {
   margin-top: auto;
 }
+
+/* CardAddToCart: a +/- quantity stepper once a product is already in the cart, in place of
+   the add-to-cart button. Combined with .btn or .ot-add (see herbal.css) for sizing/colour. */
+.card-qty-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  user-select: none;
+}
+.card-qty-stepper.btn {
+  padding: 0 8px;
+}
+.card-qty-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--soft);
+  color: inherit;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+.card-qty-btn:hover:not(:disabled) {
+  opacity: 0.8;
+}
+.card-qty-btn:active:not(:disabled) {
+  transform: scale(0.92);
+}
+.card-qty-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.card-qty-count {
+  flex: 1;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
 .heart {
   position: absolute;
   top: 10px;
@@ -772,6 +815,38 @@
 }
 .f input.bad {
   border-color: var(--danger);
+}
+.ckf {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 8px 14px;
+  transition: border-color 0.15s ease;
+}
+.ckf.w {
+  grid-column: 1 / -1;
+}
+.ckf:focus-within {
+  border-color: var(--primary);
+}
+.ckf.bad {
+  border-color: var(--danger);
+}
+.ckf label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: block;
+}
+.ckf input {
+  width: 100%;
+  height: 24px;
+  border: 0;
+  background: none;
+  padding: 0;
+  font-size: 14px;
 }
 .er {
   color: var(--danger);

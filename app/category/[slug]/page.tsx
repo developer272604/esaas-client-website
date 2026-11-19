@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { CategoryView } from '@/components/views/ListViews';
@@ -31,5 +32,9 @@ export default async function CategoryPage({ params }: Props) {
     notFound();
   }
 
-  return <CategoryView slug={slug} />;
+  return (
+    <Suspense fallback={<div className="wrap page" aria-busy="true" />}>
+      <CategoryView slug={slug} />
+    </Suspense>
+  );
 }

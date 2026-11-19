@@ -8,6 +8,7 @@ import { useCartStore } from '@/store/cart';
 import { useOrdersStore } from '@/store/orders';
 import { useUiStore } from '@/store/ui';
 import { Art } from '@/components/common/Art';
+import { Icon } from '@/components/common/Icon';
 import { Crumbs, EmptyState } from '@/components/common/bits';
 import { Txt } from '@/components/demo/Txt';
 import { useDocumentTitle } from '@/lib/useDocumentTitle';
@@ -23,43 +24,112 @@ function OrderCard({ o }: { o: Order }) {
   const openCart = useUiStore((s) => s.openCart);
   const canCancel = !o.cancelled && o.stage < 2;
   const canAdvance = !o.cancelled && o.stage < MAX_STAGE;
+  const itemCount = o.items.reduce((n, i) => n + i.qty, 0);
+  const delivered = !o.cancelled && o.stage === MAX_STAGE;
 
   return (
     <article className="oc" data-order={o.id}>
-      <div className="oh">
+      <div className="od-head">
+        <h2>Order details</h2>
+        <button type="button" className="btn ghost sm" onClick={() => toast('Demo store — there is no real invoice to download.')}>
+          <Icon name="download" size={16} /> Download invoice
+        </button>
+      </div>
+      <div className="od-stats">
         <div>
+          <small>Order number</small>
           <b>{o.id}</b>
-          <br />
-          <small className="muted">
-            {fmtDate(o.date)} · {inr(o.t.total)} · {o.pay.toUpperCase()}
-          </small>
         </div>
-        <span className={`pill${o.cancelled ? ' x' : ''}`} data-status>
-          {o.cancelled ? 'Cancelled' : STAGES[o.stage]}
-        </span>
+        <div>
+          <small>Order placed</small>
+          <b>{fmtDate(o.date)}</b>
+        </div>
+        <div>
+          <small>Order delivered</small>
+          <b>{delivered ? fmtDate(o.date) : '—'}</b>
+        </div>
+        <div>
+          <small>No of items</small>
+          <b>{itemCount} item{itemCount === 1 ? '' : 's'}</b>
+        </div>
+        <div>
+          <small>Status</small>
+          <b className={o.cancelled ? 'bad' : delivered ? 'ok' : ''}>{o.cancelled ? 'Cancelled' : STAGES[o.stage]}</b>
+        </div>
       </div>
-      <div className="oi">
-        {o.items.map((i) => {
-          const p = product(i.id);
-          return (
-            <Link key={i.id + i.opt} href={`/product/${i.id}`} title={i.name}>
-              <Art id={i.id} emoji={i.emoji} name={i.name} image={p?.image} sizes="52px" />
-            </Link>
-          );
-        })}
-      </div>
-      <small className="muted">
-        {o.items.map((i) => `${i.name}${i.opt ? ` (${i.opt})` : ''} × ${i.qty}`).join(', ')}
-      </small>
+
       {!o.cancelled && (
-        <ol className="tl" aria-label="Order progress">
-          {STAGES.map((s, i) => (
-            <li key={s} className={i <= o.stage ? 'd' : ''} aria-current={i === o.stage ? 'step' : undefined}>
-              {s}
-            </li>
-          ))}
-        </ol>
+        <div className="od-track">
+          <div className="od-track-head">
+            <h3>Order tracking</h3>
+            <span className="muted">Order ID: {o.id}</span>
+          </div>
+          <ol className="tl" aria-label="Order progress">
+            {STAGES.map((s, i) => (
+              <li key={s} className={i <= o.stage ? 'd' : ''} aria-current={i === o.stage ? 'step' : undefined}>
+                <span className="tl-n">{i + 1}</span>
+                <b>{s}</b>
+                <small>{i <= o.stage ? fmtDate(o.date) : ''}</small>
+              </li>
+            ))}
+          </ol>
+        </div>
       )}
+
+      <div className="od-items">
+        <h3>Items from the order</h3>
+        <div className="od-table">
+          <div className="od-row od-row-head" aria-hidden="true">
+            <span>Product</span>
+            <span>Variant</span>
+            <span>Quantity</span>
+            <span>Price</span>
+          </div>
+          {o.items.map((i) => {
+            const p = product(i.id);
+            return (
+              <div className="od-row" key={i.id + i.opt}>
+                <Link href={`/product/${i.id}`} className="od-prod">
+                  <Art id={i.id} emoji={i.emoji} name={i.name} image={p?.image} sizes="56px" />
+                  <span>
+                    <b>{i.name}</b>
+                    <small className="muted">Product ID: {i.id}</small>
+                  </span>
+                </Link>
+                <span data-label="Variant">{i.opt || '—'}</span>
+                <span data-label="Quantity">{i.qty}</span>
+                <span data-label="Price">{inr(i.price * i.qty)}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="od-totals">
+        <div className="od-tbox">
+          {o.t.disc > 0 && (
+            <div className="r">
+              <span>Discount</span>
+              <span>−{inr(o.t.disc)}</span>
+            </div>
+          )}
+          <div className="r">
+            <span>Delivery</span>
+            <span>{o.t.ship ? inr(o.t.ship) : 'Free'}</span>
+          </div>
+        </div>
+        <div className="od-tbox">
+          <div className="r">
+            <span>Subtotal</span>
+            <span>{inr(o.t.sub)}</span>
+          </div>
+          <div className="r t">
+            <span>Total</span>
+            <span>{inr(o.t.total)}</span>
+          </div>
+        </div>
+      </div>
+
       <div className="oacts">
         <button
           type="button"

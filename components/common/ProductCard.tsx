@@ -4,22 +4,20 @@ import Link from '@/components/common/Link';
 import { pct } from '@/lib/format';
 import { fromPrice } from '@/lib/pricing';
 import type { Product } from '@/lib/types';
-import { useCartStore } from '@/store/cart';
 import { useWishlistStore } from '@/store/wishlist';
 import { useUiStore } from '@/store/ui';
 import { Art } from './Art';
 import { Txt, productNameId, useProductName } from '@/components/demo/Txt';
 import { Icon } from './Icon';
 import { Price, Stars } from './bits';
+import { CardAddToCart } from './CardAddToCart';
 
 /** `level` is the heading level of the product name: 2 on a page whose title is the h1, 3 under a section heading. */
 export function ProductCard({ product: p, sizes, level = 3 }: { product: Product; sizes?: string; level?: 2 | 3 }) {
   const Heading = level === 2 ? 'h2' : 'h3';
   const wished = useWishlistStore((s) => s.ids.includes(p.id));
   const toggle = useWishlistStore((s) => s.toggle);
-  const add = useCartStore((s) => s.add);
   const toast = useUiStore((s) => s.showToast);
-  const openCart = useUiStore((s) => s.openCart);
   const name = useProductName(p.id, p.name);
   const { price, mrp, from } = fromPrice(p);
   const off = pct(price, mrp);
@@ -67,16 +65,7 @@ export function ProductCard({ product: p, sizes, level = 3 }: { product: Product
             Choose {p.opts.label.toLowerCase()}
           </Link>
         ) : (
-          <button
-            type="button"
-            className="btn sm"
-            onClick={() => {
-              add(p.id, 0, 1);
-              openCart();
-            }}
-          >
-            Add to cart
-          </button>
+          <CardAddToCart product={p} className="btn sm" />
         )}
       </div>
     </article>

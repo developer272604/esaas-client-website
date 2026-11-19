@@ -49,6 +49,18 @@ function ProductDetail({ id, products, category, freeShipAt }: { id: string; pro
   const name = useProductName(p.id, p.name);
   const related = products.filter((q) => q.cat === p.cat && q.id !== id);
   const more = (related.length ? related : products.filter((q) => q.id !== id)).slice(0, 4);
+  const tags = [c?.name, p.tag, p.opts?.label].filter(Boolean).join(', ');
+
+  const share = async () => {
+    const url = window.location.href;
+    try {
+      if (navigator.share) return void (await navigator.share({ title: name, url }));
+      await navigator.clipboard.writeText(url);
+      toast('Link copied to clipboard');
+    } catch {
+      // dismissed, or the clipboard is blocked: nothing to report
+    }
+  };
 
   return (
     <div className="wrap page">
@@ -56,7 +68,11 @@ function ProductDetail({ id, products, category, freeShipAt }: { id: string; pro
       <div className="pg">
         <Gallery product={p} view={view} onView={setView} />
         <div className="info">
-          <Txt as="h1" id={productNameId(p.id)} text={p.name} />
+          {c && <p className="pcat">{c.name}</p>}
+          <div className="pname-row">
+            <Txt as="h1" id={productNameId(p.id)} text={p.name} />
+            <span className="stock-badge">In stock</span>
+          </div>
           <div className="info-rating">
             <Stars rating={p.rating} /> <span className="rc">{p.rating} ({p.rev.toLocaleString('en-IN')} reviews)</span>
           </div>
@@ -78,6 +94,16 @@ function ProductDetail({ id, products, category, freeShipAt }: { id: string; pro
             </button>
             <button
               type="button"
+              className="btn accent"
+              onClick={() => {
+                add(id, opt, qty);
+                router.push('/checkout');
+              }}
+            >
+              Buy now
+            </button>
+            <button
+              type="button"
               className={`sqr${wished ? ' on' : ''}`}
               aria-label={wished ? 'Remove from wishlist' : 'Add to wishlist'}
               aria-pressed={wished}
@@ -90,17 +116,14 @@ function ProductDetail({ id, products, category, freeShipAt }: { id: string; pro
               <Icon name="heart" size={20} filled={wished} />
             </button>
           </div>
-          <button
-            type="button"
-            className="btn ghost block"
-            onClick={() => {
-              add(id, opt, qty);
-              router.push('/checkout');
-            }}
-          >
-            Buy now
-          </button>
           <PincodeCheck />
+          <div className="pmeta">
+            <span>SKU: {p.id.toUpperCase()}</span>
+            {tags && <span>Tags: {tags}</span>}
+            <button type="button" className="linkbtn" onClick={share}>
+              <Icon name="share" size={14} /> Share
+            </button>
+          </div>
           <div className="perks">
             <div><Icon name="truck" />Free delivery over {inr(freeShipAt)}</div>
             <div><Icon name="refresh" />7-day easy returns</div>

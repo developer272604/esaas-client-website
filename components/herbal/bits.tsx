@@ -8,10 +8,10 @@ import { useCatalog } from '@/lib/hooks';
 import { inr, pct } from '@/lib/format';
 import { fromPrice } from '@/lib/pricing';
 import type { Product } from '@/lib/types';
-import { useCartStore } from '@/store/cart';
 import { useUiStore } from '@/store/ui';
 import { useWishlistStore } from '@/store/wishlist';
 import { BrandLogo } from '@/components/common/BrandLogo';
+import { CardAddToCart } from '@/components/common/CardAddToCart';
 
 /** Routes in templates are written without a leading slash. */
 export const to = (go: string) => (go.startsWith('/') ? go : `/${go}`);
@@ -150,14 +150,6 @@ export function OtCard({ product: p }: { product: Product }) {
   const name = useProductName(p.id, p.name);
   const { price, mrp, from } = fromPrice(p);
   const off = pct(price, mrp);
-  const add = useCartStore((s) => s.add);
-  const openCart = useUiStore((s) => s.openCart);
-  const [added, setAdded] = useState(false);
-  useEffect(() => {
-    if (!added) return;
-    const t = setTimeout(() => setAdded(false), 1500);
-    return () => clearTimeout(t);
-  }, [added]);
 
   return (
     <article className="ot-card">
@@ -183,17 +175,7 @@ export function OtCard({ product: p }: { product: Product }) {
           )}
           {off >= 20 && <em>{off}% off</em>}
         </p>
-        <button
-          type="button"
-          className="ot-btn ot-add"
-          onClick={() => {
-            add(p.id, 0, 1);
-            setAdded(true);
-            openCart();
-          }}
-        >
-          <span key={added ? 'a' : 'i'}>{added ? 'Added' : 'Add to cart'}</span>
-        </button>
+        <CardAddToCart product={p} className="ot-add" />
       </div>
     </article>
   );

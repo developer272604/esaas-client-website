@@ -1,5 +1,5 @@
 "use client";
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useCatalog } from '@/lib/hooks';
 import { ListView } from '@/components/ListView';
 import { EmptyState } from '@/components/common/bits';
@@ -14,6 +14,9 @@ export function ShopView() {
 
 export function CategoryView({ slug }: { slug: string }) {
   const { category, products } = useCatalog();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const subcat = searchParams.get('subcat') || undefined;
   const c = category(slug);
   useDocumentTitle(c ? c.name : 'Category not found');
   if (!c) {
@@ -23,7 +26,29 @@ export function CategoryView({ slug }: { slug: string }) {
       </div>
     );
   }
-  return <ListView key={slug} title={c.name} blurb={c.blurb} items={products.filter((p) => p.cat === slug)} trail={[{ label: c.name }]} titleId={`cat.${slug}.name`} blurbId={`cat.${slug}.blurb`} activeSlug={slug} />;
+  const allInCat = products.filter((p) => p.cat === slug);
+  const items = subcat ? allInCat.filter((p) => p.subcat === subcat) : allInCat;
+  const subObj = c.subcategories?.find((s) => s.slug === subcat);
+
+  const trail = [
+    { label: c.name, ...(subcat ? { href: `/category/${c.slug}` } : {}) },
+    ...(subObj ? [{ label: subObj.name }] : []),
+  ];
+
+  return (
+    <ListView
+      key={`${slug}-${subcat ?? 'all'}`}
+      title={subObj ? `${c.name} · ${subObj.name}` : c.name}
+      blurb={c.blurb}
+      items={items}
+      trail={trail}
+      titleId={`cat.${slug}.name`}
+      blurbId={`cat.${slug}.blurb`}
+      activeSlug={slug}
+      activeSubcat={subcat}
+      onClearSubcat={() => router.push(`/category/${slug}`)}
+    />
+  );
 }
 
 export function SearchView() {

@@ -12,13 +12,16 @@ import type { Product } from '@/lib/types';
 import { PriceRange } from './PriceRange';
 import { OFFER_LABELS, type Bounds, type Filters, type OfferKey } from './model';
 
-export type CatLink = { slug: string; name: string; count: number };
+export type SubcatLink = { slug: string; name: string; count: number };
+export type CatLink = { slug: string; name: string; count: number; subcategories?: SubcatLink[] };
 
 type Props = {
   cats: CatLink[];
   allCount: number;
   /** A category slug, `all` on the shop page, or nothing on search. */
   activeSlug?: string;
+  activeSubcat?: string;
+  onClearSubcat?: () => void;
   filters: Filters;
   bounds: Bounds;
   showPrice: boolean;
@@ -59,11 +62,16 @@ export function Sidebar(p: Props) {
     };
   }, []);
 
+  const activeCat = p.cats.find((c) => c.slug === p.activeSlug);
   const priceOn = p.filters.min > p.bounds.lo || p.filters.max < p.bounds.hi;
   const chips: { key: string; label: string; remove: () => void }[] = [];
   if (priceOn) chips.push({ key: 'price', label: `${inr(p.filters.min)} – ${inr(p.filters.max)}`, remove: p.onClearPrice });
   for (const v of p.filters.packs) chips.push({ key: `pack:${v}`, label: v, remove: () => p.onTogglePack(v) });
   for (const k of p.filters.offers) chips.push({ key: `offer:${k}`, label: OFFER_LABELS[k], remove: () => p.onToggleOffer(k) });
+  if (p.activeSubcat && p.activeSlug) {
+    const sub = activeCat?.subcategories?.find((s) => s.slug === p.activeSubcat);
+    chips.push({ key: `subcat:${p.activeSubcat}`, label: sub ? sub.name : p.activeSubcat, remove: () => p.onClearSubcat?.() });
+  }
 
   return (
     <>
@@ -127,7 +135,7 @@ export function Sidebar(p: Props) {
             </li>
             {p.cats.map((c) => (
               <li key={c.slug}>
-                <Link href={`/category/${c.slug}`} className={p.activeSlug === c.slug ? 'on' : undefined} aria-current={p.activeSlug === c.slug ? 'page' : undefined}>
+                <Link href={`/category/${c.slug}`} className={p.activeSlug === c.slug && !p.activeSubcat ? 'on' : undefined} aria-current={p.activeSlug === c.slug && !p.activeSubcat ? 'page' : undefined}>
                   <span>{c.name}</span>
                   <small>{c.count}</small>
                 </Link>
@@ -135,6 +143,33 @@ export function Sidebar(p: Props) {
             ))}
           </ul>
         </nav>
+
+        {activeCat?.subcategories && activeCat.subcategories.length > 0 && (
+          <nav className="cat-w cat-sub-w" aria-label="Subcategories">
+            <div className="cat-wh">
+              <h2>Subcategories</h2>
+            </div>
+            <ul className="cat-cats cat-sub-list">
+              <li>
+                <Link href={`/category/${activeCat.slug}`} className={!p.activeSubcat ? 'on' : undefined} aria-current={!p.activeSubcat ? 'page' : undefined}>
+                  <span>All {activeCat.name}</span>
+                  <small>{activeCat.count}</small>
+                </Link>
+              </li>
+              {activeCat.subcategories.map((sub) => {
+                const isSubActive = p.activeSubcat === sub.slug;
+                return (
+                  <li key={sub.slug}>
+                    <Link href={`/category/${activeCat.slug}?subcat=${sub.slug}`} className={isSubActive ? 'on' : undefined} aria-current={isSubActive ? 'page' : undefined}>
+                      <span>{sub.name}</span>
+                      <small>{sub.count}</small>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        )}
 
         {p.showPrice && (
           <div className="cat-w">

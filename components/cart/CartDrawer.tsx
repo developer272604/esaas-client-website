@@ -5,8 +5,9 @@ import { useCatalog } from '@/lib/hooks';
 import { inr } from '@/lib/format';
 import { usePathname } from '@/lib/nav';
 import { consumeCartRoute } from '@/lib/cart-route';
-import { COUPONS, computeTotals, freeShipRemaining, lineKey, normaliseCoupon, toPriced, unitMrp, unitPrice } from '@/lib/pricing';
+import { COUPONS, computeTotals, freeShipRemaining, fromPrice, lineKey, toPriced, unitMrp, unitPrice } from '@/lib/pricing';
 import { useFocusTrap } from '@/lib/useFocusTrap';
+import { useBodyScrollLock } from '@/lib/useBodyScrollLock';
 import { cartCount, useCartStore } from '@/store/cart';
 import { useWishlistStore } from '@/store/wishlist';
 import { useUiStore } from '@/store/ui';
@@ -40,17 +41,18 @@ function FreeShipBar({ sub, freeAt, free }: { sub: number; freeAt: number; free:
 export function CartDrawer() {
   const open = useUiStore((s) => s.cartOpen);
   const close = useUiStore((s) => s.closeCart);
+  const openWishlist = useUiStore((s) => s.openWishlist);
   const modal = useUiStore((s) => s.modal);
   const toast = useUiStore((s) => s.showToast);
   const pathname = usePathname();
-  const { product, freeShipAt } = useCatalog();
+  const { product, products, freeShipAt } = useCatalog();
   const lines = useCartStore((s) => s.lines);
   const storedCoupon = useCartStore((s) => s.coupon);
   const setQty = useCartStore((s) => s.setQty);
   const remove = useCartStore((s) => s.remove);
-  const setCoupon = useCartStore((s) => s.setCoupon);
-  const addWish = useWishlistStore((s) => s.add);
-  const [code, setCode] = useState('');
+  const add = useCartStore((s) => s.add);
+  const wishIds = useWishlistStore((s) => s.ids);
+  const toggleWish = useWishlistStore((s) => s.toggle);
   const panelRef = useRef<HTMLDivElement>(null);
   const coupon = COUPONS.includes(storedCoupon as Coupon) ? storedCoupon : null;
 
@@ -69,14 +71,7 @@ export function CartDrawer() {
   }, [pathname, close]);
 
   // The page behind does not scroll while the cart is open.
-  useEffect(() => {
-    if (!open) return;
-    const { overflow } = document.body.style;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = overflow;
-    };
-  }, [open]);
+  useBodyScrollLock(open);
 
   const priced = toPriced(lines, product);
   const totals = computeTotals(priced, { coupon, speed: 'std', pay: 'upi', freeAt: freeShipAt });
@@ -84,13 +79,12 @@ export function CartDrawer() {
   const count = cartCount(priced.map((l) => ({ id: l.product.id, o: l.o, qty: l.qty })));
   const inert = open ? {} : ({ inert: true } as object);
 
-  const apply = () => {
-    const c = normaliseCoupon(code);
-    if (!c) return toast('That coupon is not valid. Try WELCOME10 or FREESHIP.');
-    setCoupon(c);
-    setCode('');
-    toast('Coupon applied');
-  };
+  const cartIds = new Set(priced.map((l) => l.product.id));
+  const cartCats = new Set(priced.map((l) => l.product.cat));
+  const crossSell = products
+    .filter((p) => !cartIds.has(p.id))
+    .sort((a, b) => Number(cartCats.has(b.cat)) - Number(cartCats.has(a.cat)))
+    .slice(0, 8);
 
   return (
     <>
@@ -107,12 +101,24 @@ export function CartDrawer() {
 
         {!priced.length ? (
           <div className="cd-empty">
-            <span className="ee" aria-hidden="true">🛍️</span>
-            <h3>Your cart is empty</h3>
-            <p>Add a few things you like and they will show up here.</p>
-            <Link className="btn" href="/shop" onClick={close}>
-              Start shopping
-            </Link>
+            <img className="cd-empty-art" src="/images/cart/empty-cart.webp" alt="" width={140} height={104} />
+            <h3>Nothing in your cart yet</h3>
+            <p>Shop to add items here, or go to your saved items to see what you bookmarked earlier.</p>
+            <div className="cd-empty-acts">
+              <Link className="btn block" href="/shop" onClick={close}>
+                Start shopping
+              </Link>
+              <button
+                type="button"
+                className="btn ghost block"
+                onClick={() => {
+                  close();
+                  openWishlist();
+                }}
+              >
+                Go to saved items
+              </button>
+            </div>
           </div>
         ) : (
           <>
@@ -148,18 +154,20 @@ export function CartDrawer() {
                         <div className="cd-act">
                           <QtyStepper value={l.qty} onChange={(n) => setQty(key, n)} label={` for ${p.name}`} />
                           <div className="lk">
-                            <button type="button" onClick={() => remove(key)}>
-                              Remove
-                            </button>
                             <button
                               type="button"
+                              className={`icon sm heart${wishIds.includes(p.id) ? ' on' : ''}`}
+                              aria-label={`${wishIds.includes(p.id) ? 'Remove from' : 'Add to'} wishlist: ${p.name}`}
+                              aria-pressed={wishIds.includes(p.id)}
                               onClick={() => {
-                                remove(key);
-                                addWish(p.id);
-                                toast('Moved to wishlist', { label: 'View wishlist', href: '/wishlist' });
+                                const added = toggleWish(p.id);
+                                toast(added ? 'Saved to wishlist' : 'Removed from wishlist', added ? { label: 'View wishlist', href: '/wishlist' } : undefined);
                               }}
                             >
-                              Move to wishlist
+                              <Icon name="heart" size={16} filled={wishIds.includes(p.id)} />
+                            </button>
+                            <button type="button" className="icon sm" aria-label={`Remove ${p.name}`} onClick={() => remove(key)}>
+                              <Icon name="trash" size={16} />
                             </button>
                           </div>
                         </div>
@@ -171,47 +179,43 @@ export function CartDrawer() {
             </div>
 
             <div className="cd-foot">
-              {coupon ? (
-                <p className="hint">
-                  Coupon {coupon} applied.{' '}
-                  <button type="button" className="linkbtn" onClick={() => setCoupon(null)}>
-                    Remove
-                  </button>
-                </p>
-              ) : (
-                <>
-                  <div className="cp">
-                    <input value={code} onChange={(e) => setCode(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && apply()} placeholder="Coupon code" aria-label="Coupon code" />
-                    <button type="button" className="btn ghost sm" onClick={apply}>
-                      Apply
-                    </button>
-                  </div>
-                  <p className="hint">Try WELCOME10 or FREESHIP</p>
-                </>
+              {crossSell.length > 0 && (
+                <div className="cd-xsell">
+                  <h3>Frequently purchased with</h3>
+                  <ul>
+                    {crossSell.map((p) => {
+                      const { price } = fromPrice(p);
+                      return (
+                        <li key={p.id}>
+                          <div>
+                            <Link href={`/product/${p.id}`} tabIndex={-1} aria-hidden="true" className="cd-xs-img">
+                              <Art id={p.id} emoji={p.emoji} name={p.name} image={p.image} sizes="90px" />
+                            </Link>
+                            <button
+                              type="button"
+                              className="cd-xs-add"
+                              onClick={() => {
+                                add(p.id, 0, 1);
+                                toast(`Added ${p.name} to cart`, { label: 'View cart', href: '/cart' });
+                              }}
+                            >
+                              Add
+                            </button>
+                            <Link href={`/product/${p.id}`} className="cd-xs-name">
+                              <Txt id={productNameId(p.id)} text={p.name} />
+                            </Link>
+                          </div>
+                          <p className="cd-xs-price">{inr(price)}</p>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               )}
+
               <dl className="cd-sum">
-                <div>
-                  <dt>Subtotal</dt>
-                  <dd>{inr(totals.sub)}</dd>
-                </div>
-                {totals.save > 0 && (
-                  <div className="g">
-                    <dt>You save on MRP</dt>
-                    <dd>{inr(totals.save)}</dd>
-                  </div>
-                )}
-                {totals.disc > 0 && (
-                  <div className="g">
-                    <dt>Coupon discount</dt>
-                    <dd>−{inr(totals.disc)}</dd>
-                  </div>
-                )}
-                <div>
-                  <dt>Delivery (standard)</dt>
-                  <dd>{totals.ship === 0 ? 'Free' : inr(totals.ship)}</dd>
-                </div>
                 <div className="t">
-                  <dt>Total</dt>
+                  <dt>Estimated total</dt>
                   <dd>{inr(totals.total)}</dd>
                 </div>
               </dl>

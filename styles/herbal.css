@@ -549,6 +549,10 @@ html.capturing .ot-rv {
   padding: 0 6px;
 }
 .ot-track {
+  /* The containing block for absolutely positioned bits inside slides (star overlays,
+     screen-reader labels). Without it they escape the scroller's clipping and make the
+     whole page scroll sideways (1664px wide on a 375px phone). */
+  position: relative;
   display: flex;
   gap: 10px;
   margin: 20px -4px 0;

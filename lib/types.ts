@@ -75,6 +75,15 @@ export type Product = {
   usage?: string;
   storage?: string;
   weight?: string;
+  /** From the live catalog: used for search-engine product data. */
+  sku?: string;
+  brand?: string;
+  /** False when every variant is sold out. Unknown (demo catalogue) counts as in stock. */
+  inStock?: boolean;
+  /** Search result title set in the admin's product editor; falls back to the name. */
+  seoTitle?: string;
+  /** Last change, ISO date, for the sitemap. */
+  updatedAt?: string;
 };
 
 export type Subcategory = { slug: string; name: string };

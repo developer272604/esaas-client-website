@@ -28,7 +28,11 @@ export interface ProductVariant {
   price: number;
   /** "Compare at" price shown struck through; equal to `price` when there is no discount. */
   mrp: number;
-  stock: number;
+  /** The public catalog shares availability, not exact counts. */
+  in_stock?: boolean;
+  low_stock?: boolean;
+  /** Older catalog files only. */
+  stock?: number;
   position: number | null;
 }
 
@@ -160,6 +164,11 @@ export function adaptProductToOldFormat(p: Product): import('@/lib/types').Produ
     images: images.length ? images : undefined,
     opts,
     weight: p.weight_grams ? `${p.weight_grams} g` : undefined,
+    sku: base?.sku || undefined,
+    brand: p.brand || undefined,
+    inStock: variants.some((v) => v.in_stock ?? (v.stock ?? 0) > 0),
+    seoTitle: p.seo_title || undefined,
+    updatedAt: p.updated_at || undefined,
   };
 }
 

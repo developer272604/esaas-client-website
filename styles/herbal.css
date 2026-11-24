@@ -3158,3 +3158,17 @@ header#site-header.ot-header.sc {
     display: none;
   }
 }
+
+/* Paint the mobile headline and first image without waiting for entrance effects. */
+@media (max-width: 639px) {
+  .ot-hero .ot-in,
+  .ot-hero .ot-w > span,
+  .ot-hero-img.on .ot-cover {
+    animation: none;
+  }
+
+  .ot-hero-img:not(.on),
+  .ot-hero > .ot-leaves {
+    display: none;
+  }
+}

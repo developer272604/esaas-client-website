@@ -86,6 +86,7 @@ export function OtHero({ s, i }: SP<'ootyHero'>) {
 
   return (
     <section
+      role="group"
       aria-roledescription="carousel"
       aria-label="Featured collections"
       className="ot-hero"
@@ -397,17 +398,16 @@ function ReviewCarousel({ children }: { children: ReactNode }) {
   const count = Children.count(children);
   return (
     <div aria-roledescription="carousel" aria-label="Customer testimonials">
-      <div {...pauseProps}
-        tabIndex={0} role="region" aria-label="Customer reviews"
-        onKeyDown={(event) => {
-          if (event.target !== event.currentTarget) return;
-          if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-            event.preventDefault();
-            step(event.key === 'ArrowLeft' ? -1 : 1);
-          }
-        }}
-      >
-        <ul ref={track} className="ot-track ot-track-rv">
+      <div role="region" aria-label="Customer reviews">
+        <ul ref={track} {...pauseProps} className="ot-track ot-track-rv" tabIndex={0}
+          onKeyDown={(event) => {
+            if (event.target !== event.currentTarget) return;
+            if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+              event.preventDefault();
+              step(event.key === 'ArrowLeft' ? -1 : 1);
+            }
+          }}
+        >
           {Children.map(children, (c) => <li>{c}</li>)}
         </ul>
       </div>

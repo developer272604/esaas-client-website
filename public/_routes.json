@@ -1,1 +1,1 @@
-{"version":1,"include":["/store-catalog","/product/*","/category/*"],"exclude":[]}
+{"version":1,"include":["/*"],"exclude":["/_next/*","/images/*","/inline-scripts/*","/favicon.ico","/products.json"]}

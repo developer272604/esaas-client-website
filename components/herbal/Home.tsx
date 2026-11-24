@@ -163,7 +163,7 @@ export function OtHero({ s, i }: SP<'ootyHero'>) {
 
 export function OtTrust({ s, i }: SP<'ootyTrust'>) {
   return (
-    <section aria-label="Why shop with us" className="wrap ot-trust-wrap">
+    <section role="group" aria-label="Why shop with us" className="wrap ot-trust-wrap">
       <Reveal>
         <ul className="ot-trust">
           {s.items.map((it, j) => {
@@ -397,7 +397,7 @@ function ReviewCarousel({ children }: { children: ReactNode }) {
   const count = Children.count(children);
   return (
     <div aria-roledescription="carousel" aria-label="Customer testimonials">
-      <ul ref={track} {...pauseProps} className="ot-track ot-track-rv"
+      <div {...pauseProps}
         tabIndex={0} role="region" aria-label="Customer reviews"
         onKeyDown={(event) => {
           if (event.target !== event.currentTarget) return;
@@ -407,10 +407,10 @@ function ReviewCarousel({ children }: { children: ReactNode }) {
           }
         }}
       >
-        {Children.map(children, (c) => (
-          <li>{c}</li>
-        ))}
-      </ul>
+        <ul ref={track} className="ot-track ot-track-rv">
+          {Children.map(children, (c) => <li>{c}</li>)}
+        </ul>
+      </div>
       <div className="ot-rv-ctl">
         <button type="button" className="ot-round" aria-label="Previous testimonial" onClick={() => step(-1)}>
           <ChevronLeft aria-hidden="true" />

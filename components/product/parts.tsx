@@ -253,7 +253,7 @@ export function Tabs({ product: p }: { product: Product }) {
             ))}
           </ul>
         )}
-        {tab === 'rev' && <ReviewList product={p} />}
+        {tab === 'rev' && (p.rev > 0 ? <ReviewList product={p} /> : <p>No reviews yet</p>)}
       </div>
     </>
   );

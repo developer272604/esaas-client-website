@@ -11,6 +11,7 @@ type CartStore = {
   add: (id: string, o: number, qty: number) => void;
   /** `key` is `productId|optionIndex`. Quantity below 1 removes the line. */
   setQty: (key: string, qty: number) => void;
+  adjustQty: (key: string, delta: number) => void;
   remove: (key: string) => void;
   setCoupon: (c: Coupon | null) => void;
   clearCoupon: () => void;
@@ -35,6 +36,11 @@ export const useCartStore = create<CartStore>()(
         if (qty < 1) return set({ lines: get().lines.filter((l) => !matches(l, key)) });
         set({ lines: get().lines.map((l) => (matches(l, key) ? { ...l, qty: Math.min(MAX_QTY, qty) } : l)) });
       },
+      adjustQty: (key, delta) => set((state) => ({
+        lines: state.lines.map((line) => matches(line, key)
+          ? { ...line, qty: Math.max(1, Math.min(MAX_QTY, line.qty + delta)) }
+          : line),
+      })),
       remove: (key) => set({ lines: get().lines.filter((l) => !matches(l, key)) }),
       setCoupon: (coupon) => set({ coupon }),
       clearCoupon: () => set({ coupon: null }),

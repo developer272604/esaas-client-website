@@ -48,7 +48,7 @@ export function CartDrawer() {
   const { product, products, freeShipAt } = useCatalog();
   const lines = useCartStore((s) => s.lines);
   const storedCoupon = useCartStore((s) => s.coupon);
-  const setQty = useCartStore((s) => s.setQty);
+  const adjustQty = useCartStore((s) => s.adjustQty);
   const remove = useCartStore((s) => s.remove);
   const add = useCartStore((s) => s.add);
   const wishIds = useWishlistStore((s) => s.ids);
@@ -74,6 +74,7 @@ export function CartDrawer() {
   useBodyScrollLock(open);
 
   const priced = toPriced(lines, product);
+  const missing = lines.filter((line) => !product(line.id));
   const totals = computeTotals(priced, { coupon, speed: 'std', pay: 'upi', freeAt: freeShipAt });
   const freeShip = freeShipRemaining(totals.sub, freeShipAt) === 0 || coupon === 'FREESHIP';
   const count = cartCount(priced.map((l) => ({ id: l.product.id, o: l.o, qty: l.qty })));
@@ -82,7 +83,7 @@ export function CartDrawer() {
   const cartIds = new Set(priced.map((l) => l.product.id));
   const cartCats = new Set(priced.map((l) => l.product.cat));
   const crossSell = products
-    .filter((p) => !cartIds.has(p.id))
+    .filter((p) => !cartIds.has(p.id) && (p.optionAvailability?.[0] ?? p.inStock) !== false)
     .sort((a, b) => Number(cartCats.has(b.cat)) - Number(cartCats.has(a.cat)))
     .slice(0, 8);
 
@@ -99,7 +100,7 @@ export function CartDrawer() {
           </button>
         </div>
 
-        {!priced.length ? (
+        {!lines.length ? (
           <div className="cd-empty">
             <img className="cd-empty-art" src="/images/cart/empty-cart.webp" alt="" width={140} height={104} />
             <h3>Nothing in your cart yet</h3>
@@ -123,8 +124,17 @@ export function CartDrawer() {
         ) : (
           <>
             <div className="cd-body">
-              <FreeShipBar sub={totals.sub} freeAt={freeShipAt} free={freeShip} />
+              {priced.length > 0 && <FreeShipBar sub={totals.sub} freeAt={freeShipAt} free={freeShip} />}
               <ul className="cd-lines">
+                {missing.map((line) => {
+                  const key = lineKey(line.id, line.o);
+                  return (
+                    <li key={key}>
+                      {line.id} is no longer available.{' '}
+                      <button type="button" className="linkbtn" onClick={() => remove(key)}>Remove</button>
+                    </li>
+                  );
+                })}
                 {priced.map((l) => {
                   const p = l.product;
                   const key = lineKey(p.id, l.o);
@@ -147,12 +157,13 @@ export function CartDrawer() {
                             {p.opts.label}: {p.opts.values[l.o]}
                           </small>
                         )}
+                        {(p.optionAvailability?.[l.o] ?? p.inStock) === false && <small>Out of stock</small>}
                         <small className="each">
                           {inr(unitPrice(p, l.o))} each
                           {unitMrp(p, l.o) > unitPrice(p, l.o) && <s aria-label={`Original price ${inr(unitMrp(p, l.o))}`}> {inr(unitMrp(p, l.o))}</s>}
                         </small>
                         <div className="cd-act">
-                          <QtyStepper value={l.qty} onChange={(n) => setQty(key, n)} label={` for ${p.name}`} />
+                          <QtyStepper value={l.qty} onChange={(n) => adjustQty(key, n - l.qty)} max={(p.optionAvailability?.[l.o] ?? p.inStock) === false ? l.qty : undefined} label={` for ${p.name}`} />
                           <div className="lk">
                             <button
                               type="button"
@@ -214,14 +225,18 @@ export function CartDrawer() {
               )}
 
               <dl className="cd-sum">
+                <div>
+                  <dt>Delivery</dt>
+                  <dd>{totals.ship ? inr(totals.ship) : 'Free'}</dd>
+                </div>
                 <div className="t">
                   <dt>Estimated total</dt>
                   <dd>{inr(totals.total)}</dd>
                 </div>
               </dl>
-              <Link className="btn block" href="/checkout" onClick={close}>
+              {priced.length > 0 && missing.length === 0 && <Link className="btn block" href="/checkout" onClick={close}>
                 Proceed to checkout
-              </Link>
+              </Link>}
               <button type="button" className="linkbtn cd-more" onClick={close}>
                 Continue shopping
               </button>

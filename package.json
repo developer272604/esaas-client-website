@@ -6,6 +6,7 @@
     "dev": "next dev",
     "prebuild": "npm run import-products",
     "build": "next build",
+    "postbuild": "node scripts/externalize-inline-scripts.mjs",
     "start": "next start",
     "import-products": "node scripts/import-products.js",
     "build-with-import": "npm run import-products && npm run build",

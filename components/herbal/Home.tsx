@@ -397,7 +397,16 @@ function ReviewCarousel({ children }: { children: ReactNode }) {
   const count = Children.count(children);
   return (
     <div aria-roledescription="carousel" aria-label="Customer testimonials">
-      <ul ref={track} {...pauseProps} className="ot-track ot-track-rv">
+      <ul ref={track} {...pauseProps} className="ot-track ot-track-rv"
+        tabIndex={0} role="region" aria-label="Customer reviews"
+        onKeyDown={(event) => {
+          if (event.target !== event.currentTarget) return;
+          if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            event.preventDefault();
+            step(event.key === 'ArrowLeft' ? -1 : 1);
+          }
+        }}
+      >
         {Children.map(children, (c) => (
           <li>{c}</li>
         ))}

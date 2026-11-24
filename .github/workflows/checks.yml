@@ -1,0 +1,61 @@
+# Checks the storefront on every push and pull request: types, the static build, SEO checks on
+# the built pages, and browser tests on desktop and phone sizes. A red ❌ means one step
+# failed: open the run on GitHub (Actions tab). Failed browser tests upload a report to download.
+name: Storefront checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Types, build, SEO checks, browser tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      # Builds from the committed public/products.json (no STORE_SLUG here, so nothing is
+      # fetched from the live API). NEXT_PUBLIC_SITE_URL comes from .env.production.
+      - name: Build static site
+        run: npx next build
+
+      - name: SEO checks on the built pages
+        run: npm run check:build
+
+      - name: Dependency audit (high and critical only)
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save @playwright/test@1.64.1
+          npx playwright install --with-deps chromium
+
+      - name: Browser tests
+        run: npm run test:e2e
+
+      - name: Upload browser test report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

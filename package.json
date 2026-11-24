@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "import-products": "node scripts/import-products.js",
-    "build-with-import": "npm run import-products && npm run build"
+    "build-with-import": "npm run import-products && npm run build",
+    "check:build": "node scripts/check-build.mjs",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "lucide-react": "^1.64.0",

@@ -37,7 +37,9 @@ export function Footer() {
               <li><Link href="/orders">Track an order</Link></li>
               <li><button type="button" className="linkbtn" onClick={openCart}>Your cart</button></li>
               <li><button type="button" className="linkbtn" onClick={openWishlist}>Wishlist</button></li>
-              <li>7-day easy returns</li>
+              <li><Link href="/returns">7-day easy returns</Link></li>
+              <li><Link href="/privacy">Privacy policy</Link></li>
+              <li><Link href="/terms">Terms of sale</Link></li>
             </ul>
           </div>
           <div>

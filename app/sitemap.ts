@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: absoluteUrl('/'), lastModified: built, changeFrequency: 'weekly', priority: 1 },
     { url: absoluteUrl('/shop'), lastModified: built, changeFrequency: 'weekly', priority: 0.8 },
+    ...['/privacy', '/terms', '/returns'].map((path) => ({ url: absoluteUrl(path) })),
     ...herbal.cats.map((c) => ({
       url: absoluteUrl(`/category/${c.slug}`),
       lastModified: built,

@@ -15,25 +15,32 @@
 
 import { herbal as herbalConfig } from './config';
 import { adaptCategoryToOldFormat, adaptProductToOldFormat, getStaticCatalogData } from './data';
-import type { Category, Product } from '@/lib/types';
+import type { Category, Product, Template } from '@/lib/types';
 
+export function catalogTemplate(data: import('./data').CatalogData): Template {
+  return {
+    ...herbalConfig,
+    name: data.meta.store_name || herbalConfig.name,
+    logoUrl: data.meta.store_logo_url ?? undefined,
+    products: data.products.map(adaptProductToOldFormat),
+    cats: data.categories.filter((c) => c.is_active !== false).map(adaptCategoryToOldFormat),
+  };
+}
 const live = getStaticCatalogData();
 
-const liveProducts: Product[] | null = live ? live.products.map(adaptProductToOldFormat) : null;
-const liveCategories: Category[] | null = live ? live.categories.map(adaptCategoryToOldFormat) : null;
-
-/** True when this build is serving a real store's catalog instead of the demo one. */
 export const isLiveCatalog = live !== null;
-
-// Re-export the hardcoded template for backward compatibility (home page sections, theme, etc.),
-// but with products/categories swapped for the live store's data when available.
-export const herbal = { ...herbalConfig, products: liveProducts ?? herbalConfig.products, cats: liveCategories ?? herbalConfig.cats };
+export const herbal = live ? catalogTemplate(live) : herbalConfig;
 
 export const products: Product[] = herbal.products;
 export const categories: Category[] = herbal.cats;
 
 export const getProduct = (id: string) => products.find((p) => p.id === id);
 export const getCategory = (slug: string) => categories.find((c) => c.slug === slug);
+
+export function needsDocumentNavigation(href: string) {
+  const [, kind, slug] = href.match(/^\/(product|category)\/([^/?#]+)\/?(?:[?#]|$)/) ?? [];
+  return kind === 'product' ? !getProduct(slug) : kind === 'category' && !getCategory(slug);
+}
 
 /** Case-insensitive match on name, description and category name. */
 export function searchProducts(query: string) {

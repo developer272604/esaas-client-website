@@ -49,6 +49,7 @@ function ProductDetail({ id, products, category, freeShipAt }: { id: string; pro
   const name = useProductName(p.id, p.name);
   const related = products.filter((q) => q.cat === p.cat && q.id !== id);
   const more = (related.length ? related : products.filter((q) => q.id !== id)).slice(0, 4);
+  const inStock = (p.optionAvailability?.[opt] ?? p.inStock) !== false;
   const tags = [c?.name, p.tag, p.opts?.label].filter(Boolean).join(', ');
 
   const share = async () => {
@@ -71,10 +72,11 @@ function ProductDetail({ id, products, category, freeShipAt }: { id: string; pro
           {c && <p className="pcat">{c.name}</p>}
           <div className="pname-row">
             <Txt as="h1" id={productNameId(p.id)} text={p.name} />
-            <span className="stock-badge">In stock</span>
+            <span className="stock-badge">{inStock ? 'In stock' : 'Out of stock'}</span>
           </div>
           <div className="info-rating">
-            <Stars rating={p.rating} /> <span className="rc">{p.rating} ({p.rev.toLocaleString('en-IN')} reviews)</span>
+            {p.rev > 0 && <Stars rating={p.rating} />}
+            <span className="rc">{p.rev > 0 ? `${p.rating} (${p.rev.toLocaleString('en-IN')} reviews)` : 'No reviews yet'}</span>
           </div>
           <Price price={unitPrice(p, opt)} mrp={unitMrp(p, opt)} large />
           <p className="tax">Inclusive of all taxes</p>
@@ -85,6 +87,7 @@ function ProductDetail({ id, products, category, freeShipAt }: { id: string; pro
             <button
               type="button"
               className="btn"
+              disabled={!inStock}
               onClick={() => {
                 add(id, opt, qty);
                 openCart();
@@ -95,6 +98,7 @@ function ProductDetail({ id, products, category, freeShipAt }: { id: string; pro
             <button
               type="button"
               className="btn accent"
+              disabled={!inStock}
               onClick={() => {
                 add(id, opt, qty);
                 router.push('/checkout');
@@ -126,7 +130,7 @@ function ProductDetail({ id, products, category, freeShipAt }: { id: string; pro
           </div>
           <div className="perks">
             <div><Icon name="truck" />Free delivery over {inr(freeShipAt)}</div>
-            <div><Icon name="refresh" />7-day easy returns</div>
+            <div><Icon name="refresh" /><Link href="/returns">7-day easy returns</Link></div>
             <div><Icon name="shield" />Secure payments with Devduo Pay</div>
           </div>
         </div>

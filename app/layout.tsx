@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react';
 import { Manrope } from 'next/font/google';
+import { CatalogProvider } from '@/lib/hooks';
 import { Shell } from '@/components/Shell';
 import { herbal } from '@/lib/catalog';
 import { rootMetadata } from '@/lib/seo';
@@ -38,7 +39,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <a className="skip" href="#main">
           Skip to content
         </a>
-        <Shell>{children}</Shell>
+        <CatalogProvider><Shell>{children}</Shell></CatalogProvider>
       </body>
     </html>
   );

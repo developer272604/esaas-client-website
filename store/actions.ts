@@ -1,6 +1,7 @@
 'use client';
 
-import { getProduct, herbal } from '@/lib/catalog';
+import { herbal } from '@/lib/catalog';
+import type { Catalog } from '@/lib/hooks';
 import { adapters } from '@/lib/adapters';
 import { computeTotals, toPriced, unitPrice } from '@/lib/pricing';
 import { FIELD_ORDER, validateCheckout, type CheckoutErrors } from '@/lib/validation';
@@ -19,12 +20,19 @@ export const firstErrorField = (e: CheckoutErrors) => FIELD_ORDER.find((k) => e[
 let placing = false;
 
 /** Runs the preview payment, saves the order, and opens the confirmation page. */
-export async function runPlaceOrder(navigate: (href: string) => void): Promise<void> {
+export async function runPlaceOrder(navigate: (href: string) => void, getProduct: Catalog['product']): Promise<void> {
   if (placing) return;
   const cart = useCartStore.getState();
   const form = useCheckoutStore.getState().form;
   const lines = toPriced(cart.lines, getProduct);
   if (!lines.length) return;
+  if (lines.length !== cart.lines.length || lines.some(({ product, o }) =>
+    (product.optionAvailability?.[o] ?? product.inStock) === false ||
+    o >= (product.opts?.values.length ?? 1)
+  )) {
+    useUiStore.getState().showToast('Some items in your cart are no longer available.');
+    return;
+  }
   const totals = computeTotals(lines, { coupon: cart.coupon, speed: form.ship, pay: form.pay, freeAt: herbal.freeShipAt });
 
   placing = true;
@@ -69,15 +77,15 @@ export async function runPlaceOrder(navigate: (href: string) => void): Promise<v
 }
 
 /** Validate, ask for sign-in when needed, then place the order. */
-export function placeOrder(navigate: (href: string) => void): CheckoutErrors {
+export function placeOrder(navigate: (href: string) => void, getProduct: Catalog['product']): CheckoutErrors {
   const errors = checkCheckout();
   if (Object.keys(errors).length) return errors;
   if (!useAuthStore.getState().user) {
     const ui = useUiStore.getState();
-    ui.setAfterAuth(() => void runPlaceOrder(navigate));
+    ui.setAfterAuth(() => void runPlaceOrder(navigate, getProduct));
     ui.openModal({ t: 'auth' });
     return {};
   }
-  void runPlaceOrder(navigate);
+  void runPlaceOrder(navigate, getProduct);
   return {};
 }

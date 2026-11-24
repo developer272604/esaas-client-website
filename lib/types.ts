@@ -80,6 +80,7 @@ export type Product = {
   brand?: string;
   /** False when every variant is sold out. Unknown (demo catalogue) counts as in stock. */
   inStock?: boolean;
+  optionAvailability?: boolean[];
   /** Search result title set in the admin's product editor; falls back to the name. */
   seoTitle?: string;
   /** Last change, ISO date, for the sitemap. */
@@ -159,6 +160,7 @@ export type Template = {
   ingredientInfo?: IngredientInfo[];
   name: string;
   logo: string;
+  logoUrl?: string;
   tag: string;
   foot: string;
   announce: string;

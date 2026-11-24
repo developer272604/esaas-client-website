@@ -1,5 +1,6 @@
 "use client";
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from '@/lib/nav';
 import { useCatalog } from '@/lib/hooks';
 import { ListView } from '@/components/ListView';
 import { EmptyState } from '@/components/common/bits';

@@ -82,6 +82,7 @@ export interface Category {
 
 export interface CatalogMeta {
   store_id?: number | null;
+  store_logo_url?: string | null;
   store_name?: string | null;
   store_slug?: string | null;
   exported_at: string | null;
@@ -103,7 +104,7 @@ export interface CatalogData {
 export function getStaticCatalogData(): CatalogData | null {
   const data = rawCatalog as Partial<CatalogData> | null;
 
-  if (!data || !Array.isArray(data.products) || data.products.length === 0) {
+  if (!data || !Array.isArray(data.products) || !data.meta?.store_id) {
     return null;
   }
 
@@ -167,6 +168,7 @@ export function adaptProductToOldFormat(p: Product): import('@/lib/types').Produ
     sku: base?.sku || undefined,
     brand: p.brand || undefined,
     inStock: variants.some((v) => v.in_stock ?? (v.stock ?? 0) > 0),
+    optionAvailability: variants.map((v) => v.in_stock ?? (v.stock ?? 0) > 0),
     seoTitle: p.seo_title || undefined,
     updatedAt: p.updated_at || undefined,
   };

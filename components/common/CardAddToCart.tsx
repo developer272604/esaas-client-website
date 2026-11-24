@@ -18,7 +18,12 @@ export function CardAddToCart({ product: p, className = '' }: { product: Product
   const cartLines = lines.filter((l) => l.id === p.id);
   const totalQty = cartLines.reduce((acc, l) => acc + l.qty, 0);
 
-  if (totalQty > 0) {
+  const target = cartLines[0];
+  const canAdd = (p.optionAvailability?.[target?.o ?? 0] ?? p.inStock) !== false;
+
+  if (!target && !canAdd) return <span>Out of stock</span>;
+
+  if (target) {
     return (
       <div className={`card-qty-stepper ${className}`.trim()} role="group" aria-label={`Quantity for ${p.name}`}>
         <button
@@ -44,7 +49,7 @@ export function CardAddToCart({ product: p, className = '' }: { product: Product
           type="button"
           className="card-qty-btn card-qty-inc"
           aria-label={`Increase quantity for ${p.name}`}
-          disabled={totalQty >= MAX_QTY}
+          disabled={!canAdd || target.qty >= MAX_QTY}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();

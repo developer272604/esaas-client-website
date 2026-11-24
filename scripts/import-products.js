@@ -82,6 +82,7 @@ async function importProducts() {
       meta: {
         exported_at: body.meta?.exported_at || new Date().toISOString(),
         store_id: body.meta?.store_id ?? null,
+        store_logo_url: body.meta?.store_logo_url ?? null,
         store_name: body.meta?.store_name ?? null,
         store_slug: body.meta?.store_slug ?? STORE_SLUG,
         product_count: body.data.products.length,
@@ -144,5 +145,5 @@ function formatBytes(bytes) {
 }
 
 importProducts().then((success) => {
-  process.exit(success ? 0 : 1);
+  process.exitCode = success ? 0 : 1;
 });

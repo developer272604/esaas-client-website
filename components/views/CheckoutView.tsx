@@ -78,7 +78,7 @@ export function CheckoutView() {
   };
 
   const submit = () => {
-    const errs = placeOrder((href) => router.push(href));
+    const errs = placeOrder((href) => router.push(href), product);
     setErrors(errs);
     const names = Object.keys(errs).map((k) => LABELS[k as keyof CheckoutErrors]);
     setAnnounce(names.length ? `${names.length} field${names.length === 1 ? ' needs' : 's need'} attention: ${names.join(', ')}.` : '');

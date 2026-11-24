@@ -330,3 +330,19 @@ input[type='radio'] {
   .tour-card.center { left: 50%; transform: translateX(-50%); }
   .tour-intro { display: none; }
 }
+
+@media (max-width: 760px) {
+  .ot-card-body h3 a,
+  .cd-top h3 a,
+  .cd-xs-name,
+  .cat-link,
+  .ot-ring {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+  }
+
+  .ot-ring {
+    display: flex;
+  }
+}
